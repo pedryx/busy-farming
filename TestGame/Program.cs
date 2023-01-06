@@ -1,5 +1,6 @@
-﻿using GameLib;
+﻿using TestGame;
+using TestGame.Scenes;
 
 
-var game = new Game();
-game.Run();
+var game = new LDGame();
+game.Run<LevelScene>();
