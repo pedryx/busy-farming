@@ -68,7 +68,7 @@ namespace TestGame.Scenes
             };
             UILayer.AddControl(inventoryUI);
 
-            Button testButton = new()
+            /*Button testButton = new()
             {
                 Transform = new Transform()
                 {
@@ -83,7 +83,7 @@ namespace TestGame.Scenes
             testButton.Clicked += (sender, e) => {
                 Console.WriteLine("test");
             };
-            UILayer.AddControl(testButton);
+            UILayer.AddControl(testButton);*/
         }
     }
 }

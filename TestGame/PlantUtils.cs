@@ -16,7 +16,7 @@ namespace TestGame
     internal static class PlantUtils
     {
         private const int rowSize = 10;
-        private const float tileScale = 2.5f;
+        private const float tileScale = 1.0f;
         private const int tileSize = 32;
         private const int borderSize = 32;
         private const int yOffset = 64;
