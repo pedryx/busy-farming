@@ -8,7 +8,7 @@ namespace TestGame.Resources
 {
     internal abstract class ResourcesManager<T>
     {
-        private Dictionary<string, T> resources = new();
+        private readonly Dictionary<string, T> resources = new();
 
         public string FileExtension { get; private set; }
 

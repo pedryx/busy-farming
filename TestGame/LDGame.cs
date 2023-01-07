@@ -16,6 +16,7 @@ namespace TestGame
 
         public GraphicsDeviceManager Graphics { get; private set; }
         public SpriteManager SpriteManager { get; private set; }
+        public FontManager FontManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
         public Camera Camera { get; private set; }
 
@@ -53,6 +54,7 @@ namespace TestGame
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             SpriteManager = new SpriteManager(GraphicsDevice);
+            FontManager = new FontManager(GraphicsDevice);
 
             SpriteManager.LoadAll();
 
