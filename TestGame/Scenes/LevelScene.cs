@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 
+using System;
 using System.Collections.Generic;
 
 using TestGame.Components;
 using TestGame.Systems;
-
+using TestGame.UI;
 
 namespace TestGame.Scenes
 {
@@ -41,7 +42,15 @@ namespace TestGame.Scenes
 
         protected override void CreateUI()
         {
-
+            Button testButton = new Button()
+            {
+                Position = new Vector2(100, 100),
+                Texture = Game.SpriteManager["scrollsandblocks"],
+            };
+            testButton.Clicked += (sender, e) => {
+                Console.WriteLine("test");
+            };
+            UILayer.AddControl(testButton);
         }
     }
 }
