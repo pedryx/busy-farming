@@ -32,6 +32,9 @@ namespace TestGame.Resources
 
             foreach (var file in files)
             {
+                if (file.Contains("__MACOSX"))
+                    continue;
+
                 string name = file.Split('/', '\\').Last().Split('.').First();
                 T item = Load(file);
 

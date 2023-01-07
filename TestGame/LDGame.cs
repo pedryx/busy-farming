@@ -9,8 +9,10 @@ namespace TestGame
 {
     internal class LDGame : Game
     {
-        private readonly GraphicsDeviceManager graphics;
+        public static float GameSpeed = 1.0f;
 
+        private readonly Color clearColor = new Color(47, 129, 54);
+        private readonly GraphicsDeviceManager graphics;
         private Scene currentScene;
 
         public SpriteManager SpriteManager { get; private set; }
@@ -69,7 +71,7 @@ namespace TestGame
 
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.Green);
+            graphics.GraphicsDevice.Clear(clearColor);
             currentScene.Draw(gameTime);
 
             base.Draw(gameTime);
