@@ -89,8 +89,16 @@ namespace TestGame.Systems
                                     ),
                                 },
                             });
-                        }
 
+                            var inventory = scene.Farm.Get<Inventory>();
+                            inventory.Slots[inventory.Selected].Count--;
+                            if (inventory.Slots[inventory.Selected].Count == 0)
+                            {
+                                inventory.Slots[inventory.Selected].Plant = null;
+                                inventory.Selected = -1;
+                                scene.DestroyPlantGhost();
+                            }
+                        }
                         break;
                     }
                 }

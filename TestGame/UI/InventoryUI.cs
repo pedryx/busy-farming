@@ -45,7 +45,7 @@ namespace TestGame.UI
                 )
                 {
                     inventory.Selected = (int)((mousePosition.X - Sprite.Position.X) / Sprite.Size.X);
-                    scene.CreatePlantGhost(inventory.Slots[inventory.Selected]);
+                    scene.CreatePlantGhost(inventory.Slots[inventory.Selected].Plant);
                 }
             }
 
@@ -81,13 +81,20 @@ namespace TestGame.UI
                     Sprite.Draw(spriteBatch);
                 }
 
-                if (inventory.Slots[i] != null)
+                if (inventory.Slots[i].Plant != null)
                 {
-                    var plantSprite = inventory.Slots[i].InventorySprite;
+                    // draw invetory plant sprite
+                    var plantSprite = inventory.Slots[i].Plant.InventorySprite;
                     plantSprite.Scale = (Sprite.Size.Y * 0.8f) / plantSprite.NotScaledSize.Y;
                     plantSprite.Position = Sprite.Position + Sprite.Size / 2 - plantSprite.Size / 2;
-
                     plantSprite.Draw(spriteBatch);
+
+                    // draw item quantity
+                    string text = $"{inventory.Slots[i].Count}";
+                    Vector2 position = Sprite.Position;
+                    position.X += (Sprite.Size.X * 0.88f) - Font.MeasureString(text).X;
+                    position.Y += Sprite.Size.Y * 0.12f;
+                    spriteBatch.DrawString(Font, text, position, Color.Black);
                 }
             }
             Sprite.Position.X = offsetX;

@@ -51,7 +51,7 @@ namespace TestGame.Scenes
 
             inventory = new();
             for (int i = 0; i < InitialInventorySize; i++)
-                inventory.Slots.Add(null);
+                inventory.Slots.Add(new InventorySlot());
             Farm.Attach(inventory);
         }
 
@@ -93,7 +93,7 @@ namespace TestGame.Scenes
                 },
                 Font = Game.FontManager[new FontDescriptor()
                 {
-                    Name = "arial",
+                    Name = "calibri",
                     FontHeight = 32,
                 }],
             };
@@ -104,25 +104,10 @@ namespace TestGame.Scenes
             };
             UILayer.AddControl(inventoryUI);
 
-            inventory.Slots[1] = Plant.RussetPotatoe;
-            inventory.Slots[2] = Plant.RandomCorn;
-
-            /*Button testButton = new()
-            {
-                Transform = new Transform()
-                {
-                    Position = new Vector2(100, 100),
-                },
-                Sprite = new Sprite()
-                {
-                    texture = Game.SpriteManager["scrollsandblocks"],
-                    SourceRectange = new Rectangle(0, 64, 96, 32),
-                },
-            };
-            testButton.Clicked += (sender, e) => {
-                Console.WriteLine("test");
-            };
-            UILayer.AddControl(testButton);*/
+            inventory.Slots[1].Plant = Plant.RussetPotatoe;
+            inventory.Slots[1].Count = 2;
+            inventory.Slots[2].Plant = Plant.RandomCorn;
+            inventory.Slots[2].Count = 1;
         }
     }
 }
