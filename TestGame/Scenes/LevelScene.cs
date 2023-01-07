@@ -1,16 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 
 using System;
-using System.Collections.Generic;
 
 using TestGame.Components;
 using TestGame.Systems;
 using TestGame.UI;
 
+
 namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
+        private const int InitialInventorySize = 4;
+
         protected override void CreateSystems()
         {
             Builder

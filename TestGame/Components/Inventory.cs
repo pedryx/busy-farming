@@ -1,7 +1,10 @@
-﻿namespace TestGame.Components
+﻿using System.Collections.Generic;
+
+
+namespace TestGame.Components
 {
     internal class Inventory
     {
-        public float Money;
+        public List<InventorySlot> Slots = new();
     }
 }
