@@ -11,11 +11,19 @@ namespace TestGame.UI
     {
         private bool lastPressed = false;
 
-        public Texture2D Texture { get; set; }
-        public float Width => 96 * Scale;
-        public float Height => 32 * Scale;
+        public Sprite Sprite { get; set; }
 
         public event EventHandler Clicked;
+
+        public Vector2 Position => Transform.Position + Sprite.Offset;
+
+        public float Width => Sprite.SourceRectange.HasValue ?
+            Sprite.SourceRectange.Value.Width :
+            Sprite.texture.Width;
+
+        public float Height => Sprite.SourceRectange.HasValue ?
+            Sprite.SourceRectange.Value.Height :
+            Sprite.texture.Height;
 
         public override void Update()
         {
@@ -42,13 +50,13 @@ namespace TestGame.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(
-                Texture,
-                Position,
-                new Rectangle(0, 64, 96, 32),
-                Color.White,
-                0.0f,
+                Sprite.texture,
+                Transform.Position + Sprite.Offset,
+                Sprite.SourceRectange,
+                Sprite.Color,
+                Transform.Rotation + Sprite.Rotation,
                 Vector2.Zero,
-                Scale,
+                Transform.Scale * Sprite.Scale,
                 SpriteEffects.None,
                 0
             );

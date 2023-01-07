@@ -1,12 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+
+using TestGame.Components;
+
 
 namespace TestGame.UI
 {
     internal abstract class UIControl
     {
-        public Vector2 Position;
-        public float Scale = 1.0f;
+        public Transform Transform;
 
         public abstract void Update();
         public abstract void Draw(SpriteBatch spriteBatch);

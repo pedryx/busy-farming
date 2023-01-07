@@ -41,8 +41,15 @@ namespace TestGame.Scenes
         {
             Button testButton = new Button()
             {
-                Position = new Vector2(100, 100),
-                Texture = Game.SpriteManager["scrollsandblocks"],
+                Transform = new Transform()
+                {
+                    Position = new Vector2(100, 100),
+                },
+                Sprite = new Sprite()
+                {
+                    texture = Game.SpriteManager["scrollsandblocks"],
+                    SourceRectange = new Rectangle(0, 64, 96, 32),
+                },
             };
             testButton.Clicked += (sender, e) => {
                 Console.WriteLine("test");
