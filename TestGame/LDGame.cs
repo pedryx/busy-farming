@@ -12,22 +12,22 @@ namespace TestGame
         public static float GameSpeed = 1.0f;
 
         private readonly Color clearColor = new(47, 129, 54);
-        private readonly GraphicsDeviceManager graphics;
         private Scene currentScene;
 
+        public GraphicsDeviceManager Graphics { get; private set; }
         public SpriteManager SpriteManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
         public Camera Camera { get; private set; }
 
         public LDGame()
         {
-            graphics = new GraphicsDeviceManager(this)
+            Graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = 800,
                 PreferredBackBufferHeight = 600,
             };
             IsMouseVisible = true;
-            Camera = new Camera(graphics);
+            Camera = new Camera(Graphics);
         }
 
         public void Run<T>()
@@ -71,7 +71,7 @@ namespace TestGame
 
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(clearColor);
+            Graphics.GraphicsDevice.Clear(clearColor);
             currentScene.Draw(gameTime);
 
             base.Draw(gameTime);

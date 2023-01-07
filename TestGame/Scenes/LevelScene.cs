@@ -13,6 +13,8 @@ namespace TestGame.Scenes
     {
         private const int InitialInventorySize = 4;
 
+        private Inventory inventory;
+
         protected override void CreateSystems()
         {
             Builder
@@ -37,11 +39,36 @@ namespace TestGame.Scenes
             PlantUtils.AppendRow(farm);
             PlantUtils.AppendRow(farm);
             PlantUtils.AppendRow(farm);
+
+            inventory = new();
+            for (int i = 0; i < InitialInventorySize; i++)
+                inventory.Slots.Add(new InventorySlot());
+            farm.Attach(inventory);
         }
 
         protected override void CreateUI()
         {
-            Button testButton = new Button()
+            float screenWidth = Game.Graphics.PreferredBackBufferWidth;
+            float screenHeight = Game.Graphics.PreferredBackBufferHeight;
+
+            InventoryUI inventoryUI = new(inventory)
+            {
+                Transform = new Transform(),
+                Sprite = new Sprite()
+                {
+                    texture = Game.SpriteManager["scrollsandblocks"],
+                    SourceRectange = new Rectangle(0, 224, 96, 96),
+                    Scale = 0.5f,
+                },
+            };
+            inventoryUI.Transform.Position = new Vector2()
+            {
+                X = screenWidth / 2 - inventoryUI.Width / 2,
+                Y = screenHeight - inventoryUI.Height,
+            };
+            UILayer.AddControl(inventoryUI);
+
+            Button testButton = new()
             {
                 Transform = new Transform()
                 {
