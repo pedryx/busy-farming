@@ -48,6 +48,8 @@
         /// </summary>
         public float NoWateringDuration;
 
+        public Sprite InventorySprite;
+
         public Plant(
             int column,
             int row,
@@ -69,8 +71,11 @@
             NoWateringMultiplier = noWateringDuration;
             BasePrice = basePrice;
             GrowTime = growTime;
+
+            InventorySprite = PlantUtils.CreateInvetoryPlantSprite(this);
         }
 
         public static Plant RussetPotatoe = new(0, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 4.0f);
+        public static Plant RandomCorn = new(31, 0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 4.0f);
     }
 }

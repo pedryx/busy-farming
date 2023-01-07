@@ -3,13 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 using MonoGame.Extended.Entities;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using TestGame.Components;
+
 
 namespace TestGame
 {
@@ -21,9 +18,13 @@ namespace TestGame
         private const int borderSize = 32;
         private const int yOffset = 64;
 
-        public static Texture2D FarmPlotTexture;
+        private const int plantTileWidth = 32;
+        private const int plantTileHeight = 64;
 
-        public static void AppendRow(Entity farm)
+        public static Texture2D FarmPlotTexture;
+        public static Texture2D PlantsTexture;
+
+        public static void AppendFarmRow(Entity farm)
         {
             var apperance = farm.Get<Apperance>();
             var farmPlots = farm.Get<FarmPlots>();
@@ -55,8 +56,8 @@ namespace TestGame
 
                 var sprite = new Sprite()
                 {
-                    texture = FarmPlotTexture,
-                    Offset = new Vector2(x * tileSize * tileScale, y * tileSize * tileScale),
+                    Texture = FarmPlotTexture,
+                    Position = new Vector2(x * tileSize * tileScale, y * tileSize * tileScale),
                     SourceRectange = new Rectangle(
                         xSource,
                         ySource,
@@ -75,5 +76,18 @@ namespace TestGame
                 farmPlots.plants[y].Add(null);
             }
         }
+
+        public static Sprite CreateInvetoryPlantSprite(Plant plant)
+            => new()
+            {
+                Texture = PlantsTexture,
+                SourceRectange = new Rectangle()
+                {
+                    X = plant.Column * plantTileWidth,
+                    Y = plant.Row * plantTileHeight * 4 + 3 * plantTileHeight,
+                    Width = plantTileWidth,
+                    Height = plantTileHeight,
+                },
+            };
     }
 }

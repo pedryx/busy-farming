@@ -12,8 +12,6 @@ namespace TestGame
 
         public Vector2 Position { get; set; }
 
-        public Transform Target { get; set; }
-
         public Camera(GraphicsDeviceManager graphics)
         {
             this.graphics = graphics;
@@ -26,12 +24,6 @@ namespace TestGame
                 graphics.PreferredBackBufferHeight / 2 - Position.Y,
                 0
             );
-        }
-
-        public void Update()
-        {
-            if (Target != null)
-                Position = Target.Position;
         }
     }
 }

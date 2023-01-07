@@ -3,6 +3,7 @@
 using System;
 
 using TestGame.Components;
+using TestGame.Resources;
 using TestGame.Systems;
 using TestGame.UI;
 
@@ -24,25 +25,26 @@ namespace TestGame.Scenes
 
         protected override void CreateEntities()
         {
+            PlantUtils.FarmPlotTexture = Game.SpriteManager["plowed_soil"];
+            PlantUtils.PlantsTexture = Game.SpriteManager["crops2"];
+
             CreateFarm();
         }
 
         private void CreateFarm()
         {
             var farm = World.CreateEntity();
-            farm.Attach(new Transform());
             farm.Attach(new Inventory());
             farm.Attach(new Apperance());
             farm.Attach(new FarmPlots());
 
-            PlantUtils.FarmPlotTexture = Game.SpriteManager["plowed_soil"];
-            PlantUtils.AppendRow(farm);
-            PlantUtils.AppendRow(farm);
-            PlantUtils.AppendRow(farm);
+            PlantUtils.AppendFarmRow(farm);
+            PlantUtils.AppendFarmRow(farm);
+            PlantUtils.AppendFarmRow(farm);
 
             inventory = new();
             for (int i = 0; i < InitialInventorySize; i++)
-                inventory.Slots.Add(new InventorySlot());
+                inventory.Slots.Add(null);
             farm.Attach(inventory);
         }
 
@@ -53,20 +55,28 @@ namespace TestGame.Scenes
 
             InventoryUI inventoryUI = new(inventory)
             {
-                Transform = new Transform(),
                 Sprite = new Sprite()
                 {
-                    texture = Game.SpriteManager["scrollsandblocks"],
-                    SourceRectange = new Rectangle(0, 224, 96, 96),
-                    Scale = 0.5f,
+                    Texture = Game.SpriteManager["scrollsandblocks"],
+                    SourceRectange = new Rectangle(96, 224 - 96, 96, 96),
+                    Scale = 1.0f,
+                    Color = new Color(1, 1, 1, 0.7f),
                 },
+                Font = Game.FontManager[new FontDescriptor()
+                {
+                    Name = "arial",
+                    FontHeight = 32,
+                }],
             };
-            inventoryUI.Transform.Position = new Vector2()
+            inventoryUI.Sprite.Position = new Vector2()
             {
                 X = screenWidth / 2 - inventoryUI.Width / 2,
                 Y = screenHeight - inventoryUI.Height,
             };
             UILayer.AddControl(inventoryUI);
+
+            inventory.Slots[1] = Plant.RussetPotatoe;
+            inventory.Slots[2] = Plant.RandomCorn;
 
             /*Button testButton = new()
             {

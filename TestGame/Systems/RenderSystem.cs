@@ -6,7 +6,7 @@ using TestGame.Components;
 
 namespace TestGame.Systems
 {
-    internal class RenderSystem : EntityDrawSystem<Transform, Apperance>
+    internal class RenderSystem : EntityDrawSystem<Apperance>
     {
         private readonly Camera camera;
 
@@ -22,11 +22,11 @@ namespace TestGame.Systems
         public override void PostDraw(GameTime gameTime)
             => SpriteBatch.End();
 
-        public override void Draw(Transform transform, Apperance apperance, GameTime gameTime)
+        public override void Draw(Apperance apperance, GameTime gameTime)
         {
             foreach (var sprite in apperance.Sprites)
             {
-                sprite.Draw(SpriteBatch, transform);
+                sprite.Draw(SpriteBatch);
             }
         }
     }

@@ -65,7 +65,6 @@ namespace TestGame
 
         protected override void Update(GameTime gameTime)
         {
-            Camera.Update();
             currentScene.Update(gameTime);
 
             base.Update(gameTime);

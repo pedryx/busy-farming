@@ -12,7 +12,7 @@ namespace TestGame.UI
 
         public event EventHandler Clicked;
 
-        public Vector2 Position => Transform.Position + Sprite.Offset;
+        public Vector2 Position => Sprite.Position;
 
         public override void Update()
         {
@@ -21,15 +21,15 @@ namespace TestGame.UI
 
             if (!current && lastPressed)
             {
-                float x = Transform.Position.X + Sprite.Offset.X;
-                float y = Transform.Position.Y + Sprite.Offset.Y;
+                float x = Sprite.Position.X;
+                float y = Sprite.Position.Y;
                 var mousePosition = state.Position;
 
                 if (
                     mousePosition.X > x &&
                     mousePosition.Y > y &&
-                    mousePosition.X < x + Sprite.Width &&
-                    mousePosition.Y < y + Sprite.Height
+                    mousePosition.X < x + Sprite.Size.X &&
+                    mousePosition.Y < y + Sprite.Size.Y
                 )
                 {
                     Clicked?.Invoke(this, new EventArgs());

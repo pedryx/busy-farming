@@ -5,6 +5,7 @@ namespace TestGame.Components
 {
     internal class Inventory
     {
-        public List<InventorySlot> Slots = new();
+        public List<Plant> Slots = new();
+        public int Selected = -1;
     }
 }
