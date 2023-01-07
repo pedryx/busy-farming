@@ -11,7 +11,7 @@ namespace TestGame
     {
         public static float GameSpeed = 1.0f;
 
-        private readonly Color clearColor = new Color(47, 129, 54);
+        private readonly Color clearColor = new(47, 129, 54);
         private readonly GraphicsDeviceManager graphics;
         private Scene currentScene;
 
@@ -63,8 +63,8 @@ namespace TestGame
 
         protected override void Update(GameTime gameTime)
         {
-            currentScene.Update(gameTime);
             Camera.Update();
+            currentScene.Update(gameTime);
 
             base.Update(gameTime);
         }

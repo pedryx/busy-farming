@@ -38,5 +38,10 @@ namespace TestGame.Scenes
             PlantUtils.AppendRow(farm);
             PlantUtils.AppendRow(farm);
         }
+
+        protected override void CreateUI()
+        {
+
+        }
     }
 }
