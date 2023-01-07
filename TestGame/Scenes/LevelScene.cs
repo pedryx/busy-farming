@@ -14,11 +14,7 @@ namespace TestGame.Scenes
         protected override void CreateSystems()
         {
             Builder
-                .AddSystem(new RenderSystem(
-                    Game.SpriteBatch,
-                    Game.SpriteManager,
-                    Game.Camera
-                 ))
+                .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new CameraControlSystem(Game.Camera));
         }
 
@@ -35,6 +31,7 @@ namespace TestGame.Scenes
             farm.Attach(new Apperance());
             farm.Attach(new FarmPlots());
 
+            PlantUtils.FarmPlotTexture = Game.SpriteManager["plowed_soil"];
             PlantUtils.AppendRow(farm);
             PlantUtils.AppendRow(farm);
             PlantUtils.AppendRow(farm);

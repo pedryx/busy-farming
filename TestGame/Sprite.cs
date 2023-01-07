@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace TestGame
 {
     public class Sprite
     {
-        public string TextureName;
+        public Texture2D texture;
         public Vector2 Offset;
         public Rectangle? SourceRectange;
         public Color Color = Color.White;

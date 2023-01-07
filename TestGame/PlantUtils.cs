@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using MonoGame.Extended.Entities;
 
@@ -19,6 +20,8 @@ namespace TestGame
         private const int tileSize = 32;
         private const int borderSize = 32;
         private const int yOffset = 64;
+
+        public static Texture2D FarmPlotTexture;
 
         public static void AppendRow(Entity farm)
         {
@@ -52,7 +55,7 @@ namespace TestGame
 
                 var sprite = new Sprite()
                 {
-                    TextureName = "plowed_soil",
+                    texture = FarmPlotTexture,
                     Offset = new Vector2(x * tileSize * tileScale, y * tileSize * tileScale),
                     SourceRectange = new Rectangle(
                         xSource,

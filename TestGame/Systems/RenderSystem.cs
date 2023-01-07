@@ -2,24 +2,17 @@
 using Microsoft.Xna.Framework.Graphics;
 
 using TestGame.Components;
-using TestGame.Resources;
 
 
 namespace TestGame.Systems
 {
     internal class RenderSystem : EntityDrawSystem<Transform, Apperance>
     {
-        private readonly SpriteManager spriteManager;
         private readonly Camera camera;
 
-        public RenderSystem(
-            SpriteBatch spriteBatch,
-            SpriteManager spriteManager,
-            Camera camera
-        )
+        public RenderSystem(SpriteBatch spriteBatch, Camera camera)
             : base(spriteBatch)
         {
-            this.spriteManager = spriteManager;
             this.camera = camera;
         }
 
@@ -33,16 +26,15 @@ namespace TestGame.Systems
         {
             foreach (var sprite in apperance.Sprites)
             {
-                var texture = spriteManager[sprite.TextureName];
                 var origin = sprite.SourceRectange == null ?
-                    new Vector2(texture.Width / 2, texture.Height / 2) :
+                    new Vector2(sprite.texture.Width / 2, sprite.texture.Height / 2) :
                     new Vector2(
                         sprite.SourceRectange.Value.Width / 2,
                         sprite.SourceRectange.Value.Height / 2
                     );
 
                 SpriteBatch.Draw(
-                    texture,
+                    sprite.texture,
                     transform.Position + sprite.Offset,
                     sprite.SourceRectange,
                     sprite.Color,
