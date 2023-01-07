@@ -12,15 +12,15 @@ namespace TestGame
 {
     internal static class PlantUtils
     {
-        private const int rowSize = 10;
+        private const int rowSize = 20;
         private const float tileScale = 1.5f;
         private const int tileSize = 32;
         private const int borderSize = 32;
         private const int yOffset = 64;
-
         private const int plantTileWidth = 32;
         private const int plantTileHeight = 64;
-        private const int plantStages = 4;
+
+        public const int PlantStages = 4;
 
         public static Texture2D FarmPlotTexture;
         public static Texture2D PlantsTexture;
@@ -102,12 +102,20 @@ namespace TestGame
                 SourceRectange = new Rectangle()
                 {
                     X = plant.SpriteColumn * plantTileWidth,
-                    Y = plant.SpriteRow * plantTileHeight * plantStages + stage * plantTileHeight,
+                    Y = plant.SpriteRow * plantTileHeight * PlantStages + stage * plantTileHeight,
                     Width = plantTileWidth,
                     Height = plantTileHeight,
                 },
                 Position = position,
                 Scale = scale,
             };
+
+        public static void SetGrowStage(Plant plant, Sprite sprite, int stage)
+        {
+            var sourceRectangle = sprite.SourceRectange.Value;
+            sourceRectangle.Y = plant.SpriteRow * plantTileHeight * PlantStages
+                + stage * plantTileHeight;
+            sprite.SourceRectange = sourceRectangle;
+        }
     }
 }

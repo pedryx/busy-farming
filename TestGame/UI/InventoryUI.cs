@@ -45,7 +45,10 @@ namespace TestGame.UI
                 )
                 {
                     inventory.Selected = (int)((mousePosition.X - Sprite.Position.X) / Sprite.Size.X);
-                    scene.CreatePlantGhost(inventory.Slots[inventory.Selected].Plant);
+                    if (inventory.Slots[inventory.Selected].Count != 0)
+                    {
+                        scene.CreatePlantGhost(inventory.Slots[inventory.Selected].Plant);
+                    }
                 }
             }
 

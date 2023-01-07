@@ -14,6 +14,8 @@
 
         public int X;
         public int Y;
+        public float GrowDuration;
+        public float CurrentGrow;
 
         public Plant(int column, int row)
         {
@@ -22,9 +24,6 @@
 
             InventorySprite = PlantUtils.CreatePlantSprite(this, 3);
         }
-
-        public static Plant RussetPotatoe = new(0, 0);
-        public static Plant RandomCorn = new(31, 0);
 
         public Plant Clone()
         {

@@ -15,7 +15,7 @@ namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
-        private const int InitialInventorySize = 4;
+        private const int InitialInventorySize = 10;
 
         private Inventory inventory;
         private Entity plantGhost;
@@ -27,7 +27,8 @@ namespace TestGame.Scenes
             Builder
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new CameraControlSystem(Game.Camera))
-                .AddSystem(new PlantGhostSystem(Game.SpriteBatch, Game.Camera, this));
+                .AddSystem(new PlantGhostSystem(Game.SpriteBatch, Game.Camera, this))
+                .AddSystem(new PlantSystem());
         }
 
         protected override void CreateEntities()
@@ -45,6 +46,14 @@ namespace TestGame.Scenes
             Farm.Attach(new Apperance());
             Farm.Attach(new FarmPlots());
 
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
             PlantUtils.AppendFarmRow(Farm);
             PlantUtils.AppendFarmRow(Farm);
             PlantUtils.AppendFarmRow(Farm);
@@ -104,10 +113,29 @@ namespace TestGame.Scenes
             };
             UILayer.AddControl(inventoryUI);
 
-            inventory.Slots[1].Plant = Plant.RussetPotatoe;
-            inventory.Slots[1].Count = 2;
-            inventory.Slots[2].Plant = Plant.RandomCorn;
-            inventory.Slots[2].Count = 1;
+            inventory.Slots[1].Plant = PlantType.Potatoe.CreatePlant();
+            inventory.Slots[1].Count = 10;
+
+            inventory.Slots[2].Plant = PlantType.Carrots.CreatePlant();
+            inventory.Slots[2].Count = 10;
+
+            inventory.Slots[4].Plant = PlantType.Beets.CreatePlant();
+            inventory.Slots[4].Count = 10;
+
+            inventory.Slots[5].Plant = PlantType.Garlic.CreatePlant();
+            inventory.Slots[5].Count = 10;
+
+            inventory.Slots[6].Plant = PlantType.Pepper.CreatePlant();
+            inventory.Slots[6].Count = 10;
+
+            inventory.Slots[7].Plant = PlantType.WaterMelon.CreatePlant();
+            inventory.Slots[7].Count = 10;
+
+            inventory.Slots[8].Plant = PlantType.Pumpkin.CreatePlant();
+            inventory.Slots[8].Count = 10;
+
+            inventory.Slots[9].Plant = PlantType.Corn.CreatePlant();
+            inventory.Slots[9].Count = 10;
         }
     }
 }
