@@ -26,24 +26,7 @@ namespace TestGame.Systems
         {
             foreach (var sprite in apperance.Sprites)
             {
-                var origin = sprite.SourceRectange == null ?
-                    new Vector2(sprite.texture.Width / 2, sprite.texture.Height / 2) :
-                    new Vector2(
-                        sprite.SourceRectange.Value.Width / 2,
-                        sprite.SourceRectange.Value.Height / 2
-                    );
-
-                SpriteBatch.Draw(
-                    sprite.texture,
-                    transform.Position + sprite.Offset,
-                    sprite.SourceRectange,
-                    sprite.Color,
-                    transform.Rotation + sprite.Rotation,
-                    origin,
-                    transform.Scale * sprite.Scale,
-                    SpriteEffects.None,
-                    0
-                );
+                sprite.Draw(SpriteBatch, transform);
             }
         }
     }
