@@ -35,5 +35,10 @@ namespace TestGame
                 0
             );
         }
+
+        public Sprite Clone()
+        {
+            return (Sprite)MemberwiseClone();
+        }
     }
 }

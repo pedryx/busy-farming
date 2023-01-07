@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 
+using MonoGame.Extended.Entities;
+
 using System;
+using System.Collections.Generic;
 
 using TestGame.Components;
 using TestGame.Resources;
@@ -15,12 +18,16 @@ namespace TestGame.Scenes
         private const int InitialInventorySize = 4;
 
         private Inventory inventory;
+        private Entity plantGhost;
+
+        public Entity Farm { get; private set; }
 
         protected override void CreateSystems()
         {
             Builder
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
-                .AddSystem(new CameraControlSystem(Game.Camera));
+                .AddSystem(new CameraControlSystem(Game.Camera))
+                .AddSystem(new PlantGhostSystem(Game.SpriteBatch, Game.Camera, this));
         }
 
         protected override void CreateEntities()
@@ -33,19 +40,41 @@ namespace TestGame.Scenes
 
         private void CreateFarm()
         {
-            var farm = World.CreateEntity();
-            farm.Attach(new Inventory());
-            farm.Attach(new Apperance());
-            farm.Attach(new FarmPlots());
+            Farm = World.CreateEntity();
+            Farm.Attach(new Inventory());
+            Farm.Attach(new Apperance());
+            Farm.Attach(new FarmPlots());
 
-            PlantUtils.AppendFarmRow(farm);
-            PlantUtils.AppendFarmRow(farm);
-            PlantUtils.AppendFarmRow(farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
+            PlantUtils.AppendFarmRow(Farm);
 
             inventory = new();
             for (int i = 0; i < InitialInventorySize; i++)
                 inventory.Slots.Add(null);
-            farm.Attach(inventory);
+            Farm.Attach(inventory);
+        }
+
+        public void CreatePlantGhost(Plant plant)
+        {
+            DestroyPlantGhost();
+            plantGhost = World.CreateEntity();
+            var sprite = PlantUtils.CreatePlantSprite(plant, 0);
+            sprite.Color.A = 127;
+            plantGhost.Attach(new PlantGhost()
+            {
+                Sprite = sprite,
+                Plant = plant,
+            });
+        }
+
+        public void DestroyPlantGhost()
+        {
+            if (plantGhost != null)
+            {
+                World.DestroyEntity(plantGhost);
+                plantGhost = null;
+            }
         }
 
         protected override void CreateUI()
@@ -53,7 +82,7 @@ namespace TestGame.Scenes
             float screenWidth = Game.Graphics.PreferredBackBufferWidth;
             float screenHeight = Game.Graphics.PreferredBackBufferHeight;
 
-            InventoryUI inventoryUI = new(inventory)
+            InventoryUI inventoryUI = new(inventory, this)
             {
                 Sprite = new Sprite()
                 {

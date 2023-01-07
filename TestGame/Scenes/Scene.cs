@@ -11,8 +11,9 @@ namespace TestGame.Scenes
     {
         protected UILayer UILayer { get; private set; } = new();
         protected WorldBuilder Builder { get; private set; } = new();
-        protected World World { get; private set; }
         protected LDGame Game { get; private set; }
+
+        public World World { get; private set; }
 
         protected virtual void CreateEntities() { }
         protected virtual void CreateSystems() { }

@@ -13,16 +13,31 @@ namespace TestGame
     internal static class PlantUtils
     {
         private const int rowSize = 10;
-        private const float tileScale = 1.0f;
+        private const float tileScale = 1.5f;
         private const int tileSize = 32;
         private const int borderSize = 32;
         private const int yOffset = 64;
 
         private const int plantTileWidth = 32;
         private const int plantTileHeight = 64;
+        private const int plantStages = 4;
 
         public static Texture2D FarmPlotTexture;
         public static Texture2D PlantsTexture;
+
+        public static Rectangle GetFarmRectangle(Entity farm)
+        {
+            var apperance = farm.Get<Apperance>();
+            var farmPlots = farm.Get<FarmPlots>();
+
+            return new Rectangle()
+            {
+                X = (int)apperance.Sprites[0].Position.X,
+                Y = (int)apperance.Sprites[0].Position.Y,
+                Width = (int)(apperance.Sprites[0].Size.X * rowSize),
+                Height = (int)(apperance.Sprites[0].Size.Y * farmPlots.plants.Count),
+            };
+        }
 
         public static void AppendFarmRow(Entity farm)
         {
@@ -77,17 +92,22 @@ namespace TestGame
             }
         }
 
-        public static Sprite CreateInvetoryPlantSprite(Plant plant)
+        public static Sprite CreatePlantSprite(Plant plant, int stage)
+            => CreatePlantSprite(plant, stage, Vector2.Zero, 1.0f);
+
+        public static Sprite CreatePlantSprite(Plant plant, int stage, Vector2 position, float scale)
             => new()
             {
                 Texture = PlantsTexture,
                 SourceRectange = new Rectangle()
                 {
-                    X = plant.Column * plantTileWidth,
-                    Y = plant.Row * plantTileHeight * 4 + 3 * plantTileHeight,
+                    X = plant.SpriteColumn * plantTileWidth,
+                    Y = plant.SpriteRow * plantTileHeight * plantStages + stage * plantTileHeight,
                     Width = plantTileWidth,
                     Height = plantTileHeight,
                 },
+                Position = position,
+                Scale = scale,
             };
     }
 }

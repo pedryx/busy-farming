@@ -5,13 +5,15 @@ using Microsoft.Xna.Framework.Input;
 using System;
 
 using TestGame.Components;
-
+using TestGame.Scenes;
 
 namespace TestGame.UI
 {
     internal class InventoryUI : UIControl
     {
         private readonly Inventory inventory;
+        private readonly LevelScene scene;
+
         private bool lastMousePressed = false;
         private bool lastEscapePressed = false;
 
@@ -21,9 +23,10 @@ namespace TestGame.UI
 
         public float Height => Sprite.Size.Y;
 
-        public InventoryUI(Inventory inventory)
+        public InventoryUI(Inventory inventory, LevelScene scene)
         {
             this.inventory = inventory;
+            this.scene = scene;
         }
 
         public override void Update()
@@ -42,6 +45,7 @@ namespace TestGame.UI
                 )
                 {
                     inventory.Selected = (int)((mousePosition.X - Sprite.Position.X) / Sprite.Size.X);
+                    scene.CreatePlantGhost(inventory.Slots[inventory.Selected]);
                 }
             }
 
@@ -50,6 +54,7 @@ namespace TestGame.UI
             if (!lastEscapePressed && currentEscapeKey)
             {
                 inventory.Selected = -1;
+                scene.DestroyPlantGhost();
             }
 
             lastMousePressed = currentMouse;
@@ -79,7 +84,7 @@ namespace TestGame.UI
                 if (inventory.Slots[i] != null)
                 {
                     var plantSprite = inventory.Slots[i].InventorySprite;
-                    plantSprite.Scale = (Sprite.NotScaledSize.Y * 0.8f) / plantSprite.NotScaledSize.Y;
+                    plantSprite.Scale = (Sprite.Size.Y * 0.8f) / plantSprite.NotScaledSize.Y;
                     plantSprite.Position = Sprite.Position + Sprite.Size / 2 - plantSprite.Size / 2;
 
                     plantSprite.Draw(spriteBatch);
