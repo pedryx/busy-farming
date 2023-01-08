@@ -20,7 +20,7 @@ namespace TestGame.Scenes
 
         protected virtual void CreateUI() { }
 
-        public void Initialize(LDGame game)
+        public virtual void Initialize(LDGame game)
         {
             Game = game;
             CreateSystems();

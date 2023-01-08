@@ -15,7 +15,18 @@ namespace TestGame.Scenes
         private const int InitialInventorySize = 10;
         private const int InitialFarmColumns = 10;
 
+        private InventoryUI inventoryUI;
+
+        private readonly ShopScene shopScene = new();
+
         public Inventory Inventory { get; private set; }
+
+        public override void Initialize(LDGame game)
+        {
+            base.Initialize(game);
+            shopScene.Initialize(game);
+            shopScene.SetInventoryUI(inventoryUI);
+        }
 
         protected override void CreateSystems()
         {
@@ -77,7 +88,7 @@ namespace TestGame.Scenes
             float screenHeight = Game.Graphics.PreferredBackBufferHeight;
 
             // create UI
-            InventoryUI inventoryUI = new(Inventory)
+            inventoryUI = new(Inventory)
             {
                 Apperance = new Apperance()
                 {
@@ -142,7 +153,8 @@ namespace TestGame.Scenes
 
             button.Clicked += (sender, e) =>
             {
-                System.Console.WriteLine("SHOP");
+                Inventory.Selected = -1;
+                Game.PushScene(shopScene);
             };
 
             UILayer.AddControl(button);
