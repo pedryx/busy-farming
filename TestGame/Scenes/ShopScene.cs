@@ -115,6 +115,33 @@ namespace TestGame.Scenes
                         Text = text,
                     };
                     UILayer.AddElement(label);
+
+                    // buy option
+                    button.Clicked += (sender, e) =>
+                    {
+                        if (inventory.Coins < type.Price / 2)
+                            return;
+                        inventory.Coins -= type.Price / 2;
+
+                        int slot = inventory.GetItemSlotOrFreeSlot<ProductItem>(type.PlantID);
+                        if (slot == -1)
+                            return;
+
+                        if (inventory.Slots[slot] == null || inventory.Slots[slot].Quantity == 0)
+                        {
+                            inventory.Slots[slot] = new SeedItem(type.PlantID)
+                            {
+                                Quantity = 1,
+                                Sprite = PlantUtils.CreatePlantSprite(type, PlantUtils.PlantStages - 1),
+                                Price = type.Price / 2,
+                                Type = type,
+                            };
+                        }
+                        else
+                        {
+                            inventory.Slots[slot].Quantity++;
+                        }
+                    };
                 }
             }
         }
