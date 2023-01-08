@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#define SCREENSHOT
+
+using Microsoft.Xna.Framework;
 
 using MonoGame.Extended.Entities;
 
@@ -65,6 +67,7 @@ namespace TestGame.Scenes
             var inventoryEntity = World.CreateEntity();
             inventoryEntity.Attach(Inventory);
 
+#if SCREENSHOT
             for (int i = 0; i < PlantType.Types.Count; i++)
             {
                 Inventory.Slots[i] = new SeedItem(PlantType.Types[i].PlantID)
@@ -79,6 +82,17 @@ namespace TestGame.Scenes
                 };
                 Inventory.Slots[i].Quantity = 10;
             }
+#else
+            var carrotType = PlantType.GetType("carrot");
+            Inventory.Slots[0] = new SeedItem(carrotType.PlantID)
+            {
+                Quantity = 4,
+                Type = carrotType,
+                Sprite = PlantUtils.CreatePlantSprite(carrotType, PlantUtils.PlantStages - 1),
+                Price = carrotType.Price / 2,
+            };
+            Inventory.Slots[0].Quantity = 4;
+#endif
         }
 
         private void CreateFarm()

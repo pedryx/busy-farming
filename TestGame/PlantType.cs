@@ -21,6 +21,16 @@ namespace TestGame
             new PlantType(00, 31, 09, 12, 02, 04, 056, "corn"),
         };
         public static IReadOnlyList<PlantType> Types => types;
+        public static PlantType GetType(string name)
+        {
+            foreach (var type in types)
+            {
+                if (type.Name == name)
+                    return type;
+            }
+
+            return null;
+        }
 
         public static void PrepareTextures(LDGame game)
         {
