@@ -8,6 +8,8 @@ namespace TestGame
 {
     internal class PlantType
     {
+        private const float maxPlantWater = 5.0f;
+
         private static int lastPlantID;
         private static readonly List<PlantType> types = new()
         {
@@ -85,6 +87,8 @@ namespace TestGame
             Type = this,
             GrowDuration = random.Next(MinGrowDuration, MaxGrowDuration + 1),
             Yield = random.Next(MinYield, MaxYield),
+            MaxWater = maxPlantWater,
+            CurrentWater = maxPlantWater,
         };
         
     }

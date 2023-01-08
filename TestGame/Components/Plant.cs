@@ -8,5 +8,7 @@
         public PlantType Type;
         public FarmPlot FarmPlot;
         public bool Decayed;
+        public float MaxWater;
+        public float CurrentWater;
     }
 }
