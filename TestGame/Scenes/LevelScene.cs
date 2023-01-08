@@ -126,6 +126,18 @@ namespace TestGame.Scenes
                 Y = windowSize.Y * 0.99f - inventoryUI.Apperance.Size.Y,
             };
 
+            inventoryUI.Clicked += (sender, e) =>
+            {
+                if (Game.CurrentScene is LevelScene)
+                {
+                    e.Inventory.Selected = e.Slot;
+                }
+                else if (Game.CurrentScene is ShopScene)
+                {
+                    shopScene.SellItem(e.Inventory.Slots[e.Slot]);
+                }
+            };
+
             UILayer.AddElement(inventoryUI);
         }
 

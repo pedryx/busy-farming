@@ -1,17 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using System;
+
 using TestGame.Components;
 
 
 namespace TestGame.UI
 {
+    internal delegate void InventoryClickEventHandler(object sender, InventoryClickEventArgs e);
+
+    internal class InventoryClickEventArgs : EventArgs
+    {
+        public Inventory Inventory { get; private set; }
+        public int Slot { get; private set; }
+
+        public InventoryClickEventArgs(Inventory inventory, int slot)
+        {
+            Inventory = inventory;
+            Slot = slot;
+        }
+    }
+
     internal class InventoryUI : UIElement
     {
         private readonly Inventory inventory;
 
         public SpriteFont Font;
         public Sprite ClickedSprite;
+
+        public event InventoryClickEventHandler Clicked;
 
         public InventoryUI(Inventory inventory)
         {
@@ -26,15 +44,16 @@ namespace TestGame.UI
                 if (apperance.Rectangle.Contains(Input.MousePosition) && Input.LeftMouseClicked)
                 {
                     if (inventory.Slots[i] != null && inventory.Slots[i].Quantity != 0)
-                        inventory.Selected = i;
+                    {
+                        Clicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
+                        break;
+                    }
                 }
                 apperance.Position.X += apperance.Size.X;
             }
 
             if (Input.RightMouseClicked)
-            {
                 inventory.Selected = -1;
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -46,5 +46,10 @@ namespace TestGame.Scenes
 
             UILayer.AddElement(button);
         }
+
+        public void SellItem(Item item)
+        {
+
+        }
     }
 }
