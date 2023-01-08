@@ -17,7 +17,7 @@ namespace TestGame.Scenes
 
         private Vector2 windowSize;
         private InventoryUI inventoryUI;
-        private MoneyCounter moneyCounter;
+        private CoinsCounter moneyCounter;
 
         private readonly ShopScene shopScene = new();
 
@@ -131,7 +131,7 @@ namespace TestGame.Scenes
 
         private void CreateMoneyCounter()
         {
-            moneyCounter = new MoneyCounter(Inventory)
+            moneyCounter = new CoinsCounter(Inventory)
             {
                 Apperance = new Apperance(),
                 Font = Game.FontManager[new FontDescriptor()
@@ -139,7 +139,7 @@ namespace TestGame.Scenes
                     Name = "calibri",
                     FontHeight = 32,
                 }],
-                Text = "Money: 0000"
+                Text = "Coins: 0000"
             };
 
             moneyCounter.Apperance.Position = new Vector2()

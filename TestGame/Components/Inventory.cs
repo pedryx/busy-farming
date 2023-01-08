@@ -7,7 +7,7 @@ namespace TestGame.Components
     {
         public List<Item> Slots = new();
         public int Selected = -1;
-        public int Money;
+        public int Coins;
 
         public Item SelectedItem => Selected == -1 ? null : Slots[Selected];
 

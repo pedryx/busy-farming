@@ -3,18 +3,18 @@
 
 namespace TestGame.UI
 {
-    internal class MoneyCounter : Label
+    internal class CoinsCounter : Label
     {
         private readonly Inventory inventory;
 
-        public MoneyCounter(Inventory inventory)
+        public CoinsCounter(Inventory inventory)
         {
             this.inventory = inventory;
         }
 
         public override void Update()
         {
-            Text = $"Money: {inventory.Money}";
+            Text = $"Coins: {inventory.Coins}";
         }
     }
 }
