@@ -123,7 +123,7 @@ namespace TestGame.Scenes
                             return;
                         inventory.Coins -= type.Price / 2;
 
-                        int slot = inventory.GetItemSlotOrFreeSlot<ProductItem>(type.PlantID);
+                        int slot = inventory.GetItemSlotOrFreeSlot<SeedItem>(type.PlantID);
                         if (slot == -1)
                             return;
 
