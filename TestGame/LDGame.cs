@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using System.Collections.Generic;
+
 using TestGame.Resources;
 using TestGame.Scenes;
 
@@ -12,8 +14,9 @@ namespace TestGame
         public static float GameSpeed = 1.0f;
 
         private readonly Color clearColor = new(47, 129, 54);
-        private Scene currentScene;
+        private readonly Stack<Scene> sceneStack = new();
 
+        public Scene CurrentScene => sceneStack.Peek();
         public GraphicsDeviceManager Graphics { get; private set; }
         public SpriteManager SpriteManager { get; private set; }
         public FontManager FontManager { get; private set; }
@@ -33,16 +36,22 @@ namespace TestGame
         public void Run<T>()
             where T : Scene, new()
         {
-            currentScene = new T();
+            sceneStack.Push(new T());
             Run();
         }
 
-        public void SwitchScene<T>()
+        public void PushScene<T>()
             where T : Scene, new()
         {
-            currentScene = new T();
-            currentScene.Initialize(this);
+            var scene = new T();
+            scene.Initialize(this);
+            PushScene(scene);
         }
+
+        public void PushScene(Scene scene)
+            => sceneStack.Push(scene);
+
+        public void PopScene() => sceneStack.Pop();
 
         protected override void LoadContent()
         {
@@ -52,7 +61,7 @@ namespace TestGame
 
             SpriteManager.LoadAll();
 
-            currentScene.Initialize(this);
+            sceneStack.Peek().Initialize(this);
             PlantType.PrepareTextures(this);
 
             base.LoadContent();
@@ -61,7 +70,7 @@ namespace TestGame
         protected override void Update(GameTime gameTime)
         {
             Input.Update(Camera);
-            currentScene.Update(gameTime);
+            sceneStack.Peek().Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -69,7 +78,7 @@ namespace TestGame
         protected override void Draw(GameTime gameTime)
         {
             Graphics.GraphicsDevice.Clear(clearColor);
-            currentScene.Draw(gameTime);
+            sceneStack.Peek().Draw(gameTime);
 
             base.Draw(gameTime);
         }
