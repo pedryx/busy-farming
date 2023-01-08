@@ -59,10 +59,13 @@ namespace TestGame.Scenes
                 FontHeight = 16,
             }];
 
-            for (int x = 0; x < rowSize; x++)
+            int typeID = 0;
+
+            for (int y = 0; y < columnSize; y++)
             {
-                for (int y = 0; y < columnSize; y++)
+                for (int x = 0; x < rowSize; x++)
                 {
+                    // create button tile
                     var apperance = tileApperance.Clone();
                     apperance.Position += new Vector2(x, y) * apperance.Size;
 
@@ -73,6 +76,24 @@ namespace TestGame.Scenes
                         Text = "",
                     };
                     UILayer.AddElement(button);
+
+                    if (typeID >= PlantType.Types.Count)
+                        continue;
+
+                    // create image for tile
+                    var type = PlantType.Types[typeID++];
+
+                    var itemApperance = apperance.Clone();
+                    itemApperance.Sprite = PlantUtils.CreatePlantSprite(type, PlantUtils.PlantStages - 1);
+                    itemApperance.Scale = new Vector2((apperance.Size.Y * 0.8f) /
+                        itemApperance.NotScaledSize.Y);
+                    itemApperance.Center(apperance);
+
+                    var image = new Image()
+                    {
+                        Apperance = itemApperance,
+                    };
+                    UILayer.AddElement(image);
                 }
             }
         }
