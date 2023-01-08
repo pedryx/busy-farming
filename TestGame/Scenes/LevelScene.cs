@@ -67,6 +67,12 @@ namespace TestGame.Scenes
 
         protected override void CreateUI()
         {
+            CreateInventoryUI();
+            CreateShopButton();
+        }
+
+        private void CreateInventoryUI()
+        {
             float screenWidth = Game.Graphics.PreferredBackBufferWidth;
             float screenHeight = Game.Graphics.PreferredBackBufferHeight;
 
@@ -103,6 +109,43 @@ namespace TestGame.Scenes
             };
 
             UILayer.AddControl(inventoryUI);
+        }
+
+        private void CreateShopButton()
+        {
+            float screenWidth = Game.Graphics.PreferredBackBufferWidth;
+            float screenHeight = Game.Graphics.PreferredBackBufferHeight;
+
+            var button = new Button()
+            {
+                Apperance = new Apperance()
+                {
+                    Sprite = new Sprite()
+                    {
+                        Texture = Game.SpriteManager["scrollsandblocks"],
+                        SourceRectange = new Rectangle(0, 64, 96, 32),
+                    },
+                },
+                Font = Game.FontManager[new FontDescriptor()
+                {
+                    Name = "calibri",
+                    FontHeight = 18,
+                }],
+                Text = "SHOP",
+            };
+
+            button.Apperance.Position = new Vector2()
+            {
+                X = screenWidth * 0.97f - button.Apperance.Size.X,
+                Y = screenHeight * 0.03f,
+            };
+
+            button.Clicked += (sender, e) =>
+            {
+                System.Console.WriteLine("SHOP");
+            };
+
+            UILayer.AddControl(button);
         }
     }
 }

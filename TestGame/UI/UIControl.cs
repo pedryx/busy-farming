@@ -9,7 +9,7 @@ namespace TestGame.UI
     {
         public Apperance Apperance;
 
-        public abstract void Update();
+        public virtual void Update() { }
         public virtual void Draw(SpriteBatch spriteBatch)
             => Apperance.Draw(spriteBatch);
     }
