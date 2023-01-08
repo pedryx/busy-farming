@@ -32,10 +32,10 @@ namespace TestGame.Scenes
             };
 
             base.Initialize(game);
-            shopScene.Initialize(game);
-
             shopScene.ShareUI(inventoryUI);
             shopScene.ShareUI(moneyCounter);
+            shopScene.SetInvetory(Inventory);
+            shopScene.Initialize(game);
         }
 
         protected override void CreateSystems()

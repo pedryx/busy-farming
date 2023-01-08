@@ -4,10 +4,15 @@ using TestGame.Components;
 using TestGame.Resources;
 using TestGame.UI;
 
+
 namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
+        private Inventory inventory;
+
+        public void SetInvetory(Inventory inventory) => this.inventory = inventory;
+
         protected override void CreateUI()
         {
             CreateLeaveButton();
@@ -49,7 +54,7 @@ namespace TestGame.Scenes
 
         public void SellItem(Item item)
         {
-
+            
         }
     }
 }
