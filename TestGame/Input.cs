@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+using TestGame.Components;
 
 namespace TestGame
 {
@@ -13,6 +14,12 @@ namespace TestGame
         public static Vector2 MousePositionTransformed { get; private set; }
         public static bool LeftMouseClicked { get; private set; }
         public static bool RightMouseClicked { get; private set; }
+
+        public static bool LeftClickOn(Apperance apperance)
+            => apperance.Rectangle.Contains(MousePositionTransformed) && LeftMouseClicked;
+
+        public static bool RightClickOn(Apperance apperance)
+            => apperance.Rectangle.Contains(MousePositionTransformed) && RightMouseClicked;
 
         public static void Update(Camera camera)
         {

@@ -56,9 +56,12 @@ namespace TestGame
                     apperance.Sprite.SourceRectange = sourceRectangle;
 
                     // attach farm plot component
-                    if (i != 0 && i != rowSize - 1)
+                    if (FarmRows != 1)
                     {
-                        entity.Attach(new FarmPlot());
+                        if (i != 0 && i != rowSize - 1)
+                        {
+                            entity.Attach(new FarmPlot());
+                        }
                     }
                 }
             }

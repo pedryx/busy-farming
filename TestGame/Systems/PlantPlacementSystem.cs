@@ -32,7 +32,7 @@ namespace TestGame.Systems
 
             var inventory = scene.Inventory;
 
-            if (inventory.Selected == -1 || inventory.Slots[inventory.Selected] is not SeedItem)
+            if (inventory.SelectedItem is not SeedItem || inventory.SelectedItem.Quantity == 0)
                 return;
 
             if (apperance.Rectangle.Contains(Input.MousePositionTransformed))
@@ -56,18 +56,24 @@ namespace TestGame.Systems
                 if (Input.LeftMouseClicked)
                 {
                     // plant a seed
-                    inventory.Slots[inventory.Selected].Quantity--;
-
                     var plantType = (inventory.Slots[inventory.Selected] as SeedItem).Type;
                     var plantApperance = ghostApperance.Clone();
                     plantApperance.Sprite = PlantUtils.CreatePlantSprite(plantType, 0);
                     plantApperance.Layer = plantApperance.Position.Y / 3000;
 
+                    var plant = plantType.CreatePlant();
+                    plant.FarmPlot = farmPlot;
+
                     var plantEntity = CreateEntity();
                     plantEntity.Attach(plantApperance);
-                    plantEntity.Attach(plantType.CreatePlant());
+                    plantEntity.Attach(plant);
 
                     farmPlot.Occupied = true;
+                    inventory.SelectedItem.Quantity--;
+                    if (inventory.SelectedItem.Quantity == 0)
+                    {
+                        inventory.Selected = -1;
+                    }
                 }
             }
         }

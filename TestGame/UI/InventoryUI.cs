@@ -25,7 +25,8 @@ namespace TestGame.UI
             {
                 if (apperance.Rectangle.Contains(Input.MousePosition) && Input.LeftMouseClicked)
                 {
-                    inventory.Selected = i;
+                    if (inventory.Slots[i] != null && inventory.Slots[i].Quantity != 0)
+                        inventory.Selected = i;
                 }
                 apperance.Position.X += apperance.Size.X;
             }

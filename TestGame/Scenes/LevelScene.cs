@@ -22,7 +22,7 @@ namespace TestGame.Scenes
             Builder
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, Game.Camera, this))
-                .AddSystem(new PlantSystem());
+                .AddSystem(new PlantSystem(this));
         }
 
         protected override void CreateEntities()
@@ -46,7 +46,7 @@ namespace TestGame.Scenes
 
             for (int i = 0; i < PlantType.Types.Count; i++)
             {
-                Inventory.Slots[i] = new SeedItem()
+                Inventory.Slots[i] = new SeedItem(PlantType.Types[i].PlantID)
                 {
                     Quantity = 10,
                     Type = PlantType.Types[i],

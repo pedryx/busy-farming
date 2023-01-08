@@ -10,6 +10,7 @@ namespace TestGame
 {
     internal class PlantType
     {
+        private static int lastPlantID;
         private static readonly List<PlantType> types = new()
         {
             new PlantType(00, 00, 09, 12, 08, 14, "potatoe"),
@@ -27,7 +28,7 @@ namespace TestGame
         {
             foreach (var type in types)
             {
-                type.Sprite = new Sprite()
+                type.ProductSprite = new Sprite()
                 {
                     Texture = game.SpriteManager[type.Name],
                 };
@@ -43,7 +44,8 @@ namespace TestGame
         public int MinYield { get; private set; }
         public int MaxYield { get; private set; }
         public string Name { get; private set; }
-        public Sprite Sprite { get; private set; }
+        public Sprite ProductSprite { get; private set; }
+        public int PlantID { get; private set; } = lastPlantID++;
 
         public PlantType(
             int spriteRow,
@@ -64,7 +66,7 @@ namespace TestGame
             Name = name;
         }
 
-        public Plant CreatePlant() => new Plant()
+        public Plant CreatePlant() => new()
         {
             Type = this,
             GrowDuration = random.Next(MinGrowDuration, MaxGrowDuration + 1),

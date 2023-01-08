@@ -6,5 +6,6 @@
         public float CurrentGrow;
         public int Yield;
         public PlantType Type;
+        public FarmPlot FarmPlot;
     }
 }
