@@ -51,13 +51,27 @@ namespace TestGame.Systems
                 texture,
                 position,
                 null,
+                Color.White,
+                0,
+                Vector2.Zero,
+                scale,
+                SpriteEffects.None,
+                0
+            );
+
+            scale.X *= (progressBar.CurrentValue - progressBar.StartValue) /
+                (progressBar.EndValue - progressBar.StartValue);
+            SpriteBatch.Draw(
+                texture,
+                position,
+                null,
                 progressBar.Color,
                 0,
                 Vector2.Zero,
                 scale,
                 SpriteEffects.None,
                 0
-             );
+            );
         }
     }
 }

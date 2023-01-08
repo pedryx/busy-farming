@@ -100,10 +100,6 @@ namespace TestGame.Systems
                             inventory.Selected = -1;
                         }
                     }
-                    else if (inventory.SelectedItem is WaterCan)
-                    {
-                        System.Console.WriteLine("Watering!");
-                    }
                 }
             }
         }
