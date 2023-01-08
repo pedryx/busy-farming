@@ -11,14 +11,14 @@ namespace TestGame
         private static int lastPlantID;
         private static readonly List<PlantType> types = new()
         {
-            new PlantType(00, 00, 09, 12, 08, 14, 018, "potatoe"),
-            new PlantType(00, 06, 05, 08, 01, 01, 008, "carrot"),
-            new PlantType(00, 09, 06, 07, 01, 01, 002, "beet"),
-            new PlantType(00, 12, 09, 09, 10, 20, 026, "garlic"),
-            new PlantType(00, 17, 06, 09, 02, 04, 151, "pepper"),
-            new PlantType(00, 23, 07, 10, 02, 04, 550, "watermelon"),
-            new PlantType(00, 27, 09, 12, 02, 05, 540, "pumpkin"),
-            new PlantType(00, 31, 09, 12, 02, 04, 056, "corn"),
+            new PlantType(00, 00, 09, 12, 08, 14, 018, 10, "potatoe"),
+            new PlantType(00, 06, 05, 08, 01, 01, 008, 11, "carrot"),
+            new PlantType(00, 09, 06, 07, 01, 01, 002, 09, "beet"),
+            new PlantType(00, 12, 09, 09, 10, 20, 026, 08, "garlic"),
+            new PlantType(00, 17, 06, 09, 02, 04, 151, 06, "pepper"),
+            new PlantType(00, 23, 07, 10, 02, 04, 550, 04, "watermelon"),
+            new PlantType(00, 27, 09, 12, 02, 05, 540, 05, "pumpkin"),
+            new PlantType(00, 31, 09, 12, 02, 04, 056, 07, "corn"),
         };
         public static IReadOnlyList<PlantType> Types => types;
         public static PlantType GetType(string name)
@@ -51,6 +51,7 @@ namespace TestGame
         public int MaxGrowDuration { get; private set; }
         public int MinYield { get; private set; }
         public int MaxYield { get; private set; }
+        public int MaxOvergrow { get; private set; }
         public int Price { get; private set; }
         public string Name { get; private set; }
         public Sprite ProductSprite { get; private set; }
@@ -64,6 +65,7 @@ namespace TestGame
             int minYield,
             int maxYield,
             int price,
+            int maxOvergrow,
             string name
         )
         {
@@ -74,6 +76,7 @@ namespace TestGame
             MinYield = minYield;
             MaxYield = maxYield;
             Price = price;
+            MaxOvergrow = maxOvergrow;
             Name = name;
         }
 

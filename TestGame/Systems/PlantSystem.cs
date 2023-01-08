@@ -20,12 +20,20 @@ namespace TestGame.Systems
             var inventory = scene.Inventory;
 
             plant.CurrentGrow += (float)gameTime.ElapsedGameTime.TotalSeconds * LDGame.GameSpeed;
-            int stage = (int)((plant.CurrentGrow / plant.GrowDuration) * (PlantUtils.PlantStages - 1));
+            int stage = MathHelper.Min(
+                (int)((plant.CurrentGrow / plant.GrowDuration) * (PlantUtils.PlantStages - 1)),
+                PlantUtils.PlantStages - 1
+            );
             apperance.Sprite = PlantUtils.CreatePlantSprite(plant.Type, stage);
 
             if (plant.CurrentGrow >= plant.GrowDuration)
             {
-                plant.CurrentGrow = plant.GrowDuration;
+                if (plant.CurrentGrow >= plant.GrowDuration + plant.Type.MaxOvergrow)
+                {
+                    plant.CurrentGrow = plant.GrowDuration + plant.Type.MaxOvergrow;
+                    plant.Decayed = true;
+                    apperance.Sprite.Color = Color.Black;
+                }
 
                 if (!Input.LeftClickOn(apperance) || inventory.Selected != -1)
                     return;
@@ -33,6 +41,9 @@ namespace TestGame.Systems
                 DestroyEntity(EntityID);
                 plant.FarmPlot.Occupied = false;
                 plant.FarmPlot = null;
+
+                if (plant.Decayed)
+                    return;
 
                 int slot = inventory.GetItemSlotOrFreeSlot<ProductItem>(plant.Type.PlantID);
                 if (slot == -1)

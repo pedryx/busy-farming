@@ -7,5 +7,6 @@
         public int Yield;
         public PlantType Type;
         public FarmPlot FarmPlot;
+        public bool Decayed;
     }
 }
