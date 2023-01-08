@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using MonoGame.Extended.Entities;
 
+using System;
 using System.Collections.Generic;
 
 using TestGame.Components;
@@ -22,6 +23,8 @@ namespace TestGame
 
         public const int PlantStages = 4;
 
+        private static readonly Random random = new();
+        private static readonly List<Entity> farmPlots = new();
         private static readonly Entity[] lastRow = new Entity[rowSize];
 
         private static Vector2 farmPosition;
@@ -61,6 +64,7 @@ namespace TestGame
                         if (i != 0 && i != rowSize - 1)
                         {
                             entity.Attach(new FarmPlot());
+                            farmPlots.Add(entity);
                         }
                     }
                 }
@@ -119,5 +123,21 @@ namespace TestGame
                 Height = plantTileHeight,
             },
         };
+
+        public static Entity GetFreePlantSpot()
+        {
+            var freeSlots = new List<Entity>();
+
+            foreach (var entity in farmPlots)
+            {
+                if (!entity.Get<FarmPlot>().Occupied)
+                    freeSlots.Add(entity);
+            }
+
+            if (freeSlots.Count == 0)
+                return null;
+
+            return freeSlots[random.Next(freeSlots.Count)];
+        }
     }
 }

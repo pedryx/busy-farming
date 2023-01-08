@@ -42,11 +42,18 @@ namespace TestGame.Scenes
 
         protected override void CreateSystems()
         {
+            var weedSprite = new Sprite()
+            {
+                Texture = Game.SpriteManager["tallgrass"],
+                SourceRectange = new Rectangle(0, 160, 32, 32)
+            };
+
             Builder
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, Game.Camera, this))
                 .AddSystem(new PlantSystem(this))
-                .AddSystem(new ProgressBarRenderSystem(Game.SpriteBatch, Game.Camera, Game.GraphicsDevice));
+                .AddSystem(new ProgressBarRenderSystem(Game.SpriteBatch, Game.Camera, Game.GraphicsDevice))
+                .AddSystem(new WeedSpawnSystem(weedSprite));
         }
 
         protected override void CreateEntities()
