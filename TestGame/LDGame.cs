@@ -45,11 +45,6 @@ namespace TestGame
             currentScene.Initialize(this);
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
-
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
@@ -59,6 +54,7 @@ namespace TestGame
             SpriteManager.LoadAll();
 
             currentScene.Initialize(this);
+            PlantType.PrepareTextures(this);
 
             base.LoadContent();
         }

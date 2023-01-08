@@ -12,7 +12,7 @@ namespace TestGame
 {
     internal static class PlantUtils
     {
-        private const int rowSize = 20;
+        private const int columnSize = 20;
         private const float tileScale = 1.5f;
         private const int tileSize = 32;
         private const int borderSize = 32;
@@ -22,100 +22,87 @@ namespace TestGame
 
         public const int PlantStages = 4;
 
+        private static readonly Vector2 farmPosition = new(-540, -260);
+        private static readonly Entity[] lastColumn = new Entity[columnSize];
+
         public static Texture2D FarmPlotTexture;
         public static Texture2D PlantsTexture;
 
-        public static Rectangle GetFarmRectangle(Entity farm)
+        public static int FarmColumns { get; private set; }
+
+        public static void CreateFarmColumn(World world)
         {
-            var apperance = farm.Get<Apperance>();
-            var farmPlots = farm.Get<FarmPlots>();
-
-            return new Rectangle()
+            if (FarmColumns != 0)
             {
-                X = (int)apperance.Sprites[0].Position.X,
-                Y = (int)apperance.Sprites[0].Position.Y,
-                Width = (int)(apperance.Sprites[0].Size.X * rowSize),
-                Height = (int)(apperance.Sprites[0].Size.Y * farmPlots.plants.Count),
-            };
-        }
-
-        public static void AppendFarmRow(Entity farm)
-        {
-            var apperance = farm.Get<Apperance>();
-            var farmPlots = farm.Get<FarmPlots>();
-
-            // change border of previous row
-            if (farmPlots.plants.Count != 0)
-            {
-                for (int i = (farmPlots.plants.Count - 1) * rowSize; i < apperance.Sprites.Count; i++)
+                // change border for previous column and attach farm plot components
+                for (int i = 0; i < columnSize; i++)
                 {
-                    var source = apperance.Sprites[i].SourceRectange.Value;
-                    source.Y -= tileSize;
-                    apperance.Sprites[i].SourceRectange = source;
+                    var entity = lastColumn[i];
+
+                    // change border
+                    var apperance = entity.Get<Apperance>();
+                    var sourceRectangle = apperance.Sprite.SourceRectange.Value;
+                    sourceRectangle.X -= tileSize;
+                    apperance.Sprite.SourceRectange = sourceRectangle;
+
+                    // attach farm plot component
+                    if (i != 0 && i != columnSize - 1)
+                    {
+                        entity.Attach(new FarmPlot());
+                    }
                 }
             }
 
-            // create sprites for new row
-            int y = farmPlots.plants.Count;
-            for (int x = 0; x < rowSize; x++)
+            // create new column
+            for (int i = 0; i < columnSize; i++)
             {
-                int xSource = borderSize;
-                int ySource = yOffset + borderSize + tileSize;
+                var entity = world.CreateEntity();
 
-                if (x == 0)
-                    xSource -= borderSize;
-                if (y == 0)
-                    ySource -= tileSize;
-                if (x == rowSize - 1)
-                    xSource += borderSize;
-
-                var sprite = new Sprite()
+                // create apperance
+                Rectangle sourceRectangle = new()
                 {
-                    Texture = FarmPlotTexture,
-                    Position = new Vector2(x * tileSize * tileScale, y * tileSize * tileScale),
-                    SourceRectange = new Rectangle(
-                        xSource,
-                        ySource,
-                        tileSize,
-                        tileSize
-                    ),
-                    Scale = tileScale,
+                    X = borderSize + tileSize,
+                    Y = yOffset + borderSize,
+                    Width = tileSize,
+                    Height = tileSize,
                 };
-                apperance.Sprites.Add(sprite);
-            }
 
-            // create farm plots for new row
-            farmPlots.plants.Add(new List<Plant>());
-            for (int x = 0; x < rowSize; x++)
-            {
-                farmPlots.plants[y].Add(null);
-            }
-        }
+                if (i == 0)
+                    sourceRectangle.Y -= borderSize;
+                if (i == columnSize - 1)
+                    sourceRectangle.Y += borderSize;
+                if (FarmColumns == 0)
+                    sourceRectangle.X -= borderSize;
 
-        public static Sprite CreatePlantSprite(Plant plant, int stage)
-            => CreatePlantSprite(plant, stage, Vector2.Zero, 1.0f);
-
-        public static Sprite CreatePlantSprite(Plant plant, int stage, Vector2 position, float scale)
-            => new()
-            {
-                Texture = PlantsTexture,
-                SourceRectange = new Rectangle()
+                entity.Attach(new Apperance()
                 {
-                    X = plant.SpriteColumn * plantTileWidth,
-                    Y = plant.SpriteRow * plantTileHeight * PlantStages + stage * plantTileHeight,
-                    Width = plantTileWidth,
-                    Height = plantTileHeight,
-                },
-                Position = position,
-                Scale = scale,
-            };
+                    Sprite = new Sprite()
+                    {
+                        Texture = FarmPlotTexture,
+                        SourceRectange = sourceRectangle,
+                    },
+                    Position = new Vector2()
+                    {
+                        X = FarmColumns * tileSize * tileScale,
+                        Y = i * tileSize * tileScale,
+                    } + farmPosition,
+                    Scale = new Vector2(tileScale),
+                });
 
-        public static void SetGrowStage(Plant plant, Sprite sprite, int stage)
-        {
-            var sourceRectangle = sprite.SourceRectange.Value;
-            sourceRectangle.Y = plant.SpriteRow * plantTileHeight * PlantStages
-                + stage * plantTileHeight;
-            sprite.SourceRectange = sourceRectangle;
+                lastColumn[i] = entity;
+            }
         }
+
+        public static Sprite CreatePlantSprite(PlantType plant, int stage) => new()
+        {
+            Texture = PlantsTexture,
+            SourceRectange = new Rectangle()
+            {
+                X = plant.SpriteColumn * plantTileWidth,
+                Y = plant.SpriteRow * plantTileHeight * PlantStages + stage * plantTileHeight,
+                Width = plantTileWidth,
+                Height = plantTileHeight,
+            },
+        };
     }
 }

@@ -10,24 +10,36 @@ namespace TestGame.Systems
     {
         private readonly Camera camera;
 
+        private bool staticDraw;
+
         public RenderSystem(SpriteBatch spriteBatch, Camera camera)
             : base(spriteBatch)
         {
             this.camera = camera;
         }
 
-        public override void PreDraw(GameTime gameTime)
-            => SpriteBatch.Begin(transformMatrix: camera.GetTransform());
+        public override void Draw(GameTime gameTime)
+        {
+            // non static render
+            staticDraw = false;
+            SpriteBatch.Begin(transformMatrix: camera.GetTransform());
+            base.Draw(gameTime);
+            SpriteBatch.End();
 
-        public override void PostDraw(GameTime gameTime)
-            => SpriteBatch.End();
+            // static render
+            staticDraw = true;
+            SpriteBatch.Begin();
+            base.Draw(gameTime);
+            SpriteBatch.End();
+        }
+
 
         public override void Draw(Apperance apperance, GameTime gameTime)
         {
-            foreach (var sprite in apperance.Sprites)
-            {
-                sprite.Draw(SpriteBatch);
-            }
+            if (apperance.Static != staticDraw)
+                return;
+
+            apperance.Draw(SpriteBatch);
         }
     }
 }

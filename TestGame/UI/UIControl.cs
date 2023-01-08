@@ -1,14 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
+using TestGame.Components;
+
 
 namespace TestGame.UI
 {
     internal abstract class UIControl
     {
-        public Sprite Sprite;
+        public Apperance Apperance;
 
         public abstract void Update();
         public virtual void Draw(SpriteBatch spriteBatch)
-            => Sprite.Draw(spriteBatch);
+            => Apperance.Draw(spriteBatch);
     }
 }

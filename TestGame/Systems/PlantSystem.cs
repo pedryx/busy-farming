@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 using TestGame.Components;
 
@@ -11,7 +12,7 @@ namespace TestGame.Systems
         {
             plant.CurrentGrow += (float)gameTime.ElapsedGameTime.TotalSeconds * LDGame.GameSpeed;
             int stage = (int)((plant.CurrentGrow / plant.GrowDuration) * (PlantUtils.PlantStages - 1));
-            PlantUtils.SetGrowStage(plant, apperance.Sprites[0], stage);
+            apperance.Sprite = PlantUtils.CreatePlantSprite(plant.Type, stage);
 
             if (plant.CurrentGrow >= plant.GrowDuration)
             {

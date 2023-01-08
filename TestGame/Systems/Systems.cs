@@ -12,6 +12,8 @@ namespace TestGame.Systems
     {
         private ComponentMapper<T1> componentMapper1;
 
+        protected int EntityID { get; private set; }
+
         protected EntityUpdateSystem()
             : base(Aspect.All(typeof(T1))) { }
 
@@ -26,6 +28,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
 
                 Update(component1, gameTime);
@@ -36,7 +39,7 @@ namespace TestGame.Systems
 
         public virtual void PreUpdate(GameTime gameTime) { }
         public virtual void PostUpdate(GameTime gameTime) { }
-        public abstract void Update(T1 component1, GameTime gameTime);
+        public virtual void Update(T1 component1, GameTime gameTime) { }
     }
 
     internal abstract class EntityUpdateSystem<T1, T2> : EntityUpdateSystem
@@ -45,6 +48,8 @@ namespace TestGame.Systems
     {
         private ComponentMapper<T1> componentMapper1;
         private ComponentMapper<T2> componentMapper2;
+
+        protected int EntityID { get; private set; }
 
         protected EntityUpdateSystem()
             : base(Aspect.All(typeof(T1), typeof(T2))) { }
@@ -61,6 +66,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
                 var component2 = componentMapper2.Get(entity);
 
@@ -72,7 +78,7 @@ namespace TestGame.Systems
 
         public virtual void PreUpdate(GameTime gameTime) { }
         public virtual void PostUpdate(GameTime gameTime) { }
-        public abstract void Update(T1 component1, T2 component2, GameTime gameTime);
+        public virtual void Update(T1 component1, T2 component2, GameTime gameTime) { }
     }
 
     internal abstract class EntityUpdateSystem<T1, T2, T3> : EntityUpdateSystem
@@ -83,6 +89,8 @@ namespace TestGame.Systems
         private ComponentMapper<T1> componentMapper1;
         private ComponentMapper<T2> componentMapper2;
         private ComponentMapper<T3> componentMapper3;
+
+        protected int EntityID { get; private set; }
 
         protected EntityUpdateSystem()
             : base(Aspect.All(typeof(T1), typeof(T2), typeof(T3))) { }
@@ -100,6 +108,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
                 var component2 = componentMapper2.Get(entity);
                 var component3 = componentMapper3.Get(entity);
@@ -112,7 +121,7 @@ namespace TestGame.Systems
 
         public virtual void PreUpdate(GameTime gameTime) { }
         public virtual void PostUpdate(GameTime gameTime) { }
-        public abstract void Update(T1 component1, T2 component2, T3 component3, GameTime gameTime);
+        public virtual void Update(T1 component1, T2 component2, T3 component3, GameTime gameTime) { }
     }
 
     internal abstract class EntityDrawSystem<T1> : EntityDrawSystem
@@ -121,6 +130,7 @@ namespace TestGame.Systems
         private ComponentMapper<T1> componentMapper1;
 
         protected SpriteBatch SpriteBatch { get; private set; }
+        protected int EntityID { get; private set; }
 
         protected EntityDrawSystem(SpriteBatch spriteBatch) 
             : base(Aspect.All(typeof(T1))) 
@@ -139,6 +149,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
 
                 Draw(component1, gameTime);
@@ -149,7 +160,7 @@ namespace TestGame.Systems
 
         public virtual void PreDraw(GameTime gameTime) { }
         public virtual void PostDraw(GameTime gameTime) { }
-        public abstract void Draw(T1 component1, GameTime gameTime);
+        public virtual void Draw(T1 component1, GameTime gameTime) { }
     }
 
     internal abstract class EntityDrawSystem<T1, T2> : EntityDrawSystem
@@ -160,6 +171,7 @@ namespace TestGame.Systems
         private ComponentMapper<T2> componentMapper2;
 
         protected SpriteBatch SpriteBatch { get; private set; }
+        protected int EntityID { get; private set; }
 
         protected EntityDrawSystem(SpriteBatch spriteBatch)
             : base(Aspect.All(typeof(T1), typeof(T2)))
@@ -179,6 +191,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
                 var component2 = componentMapper2.Get(entity);
 
@@ -190,7 +203,7 @@ namespace TestGame.Systems
 
         public virtual void PreDraw(GameTime gameTime) { }
         public virtual void PostDraw(GameTime gameTime) { }
-        public abstract void Draw(T1 component1, T2 component2, GameTime gameTime);
+        public virtual void Draw(T1 component1, T2 component2, GameTime gameTime) { }
     }
 
     internal abstract class EntityDrawSystem<T1, T2, T3> : EntityDrawSystem
@@ -203,6 +216,7 @@ namespace TestGame.Systems
         private ComponentMapper<T3> componentMapper3;
 
         protected SpriteBatch SpriteBatch { get; private set; }
+        protected int EntityID { get; private set; }
 
         protected EntityDrawSystem(SpriteBatch spriteBatch)
             : base(Aspect.All(typeof(T1), typeof(T2), typeof(T3)))
@@ -223,6 +237,7 @@ namespace TestGame.Systems
 
             foreach (var entity in ActiveEntities)
             {
+                EntityID = entity;
                 var component1 = componentMapper1.Get(entity);
                 var component2 = componentMapper2.Get(entity);
                 var component3 = componentMapper3.Get(entity);
@@ -235,6 +250,6 @@ namespace TestGame.Systems
 
         public virtual void PreDraw(GameTime gameTime) { }
         public virtual void PostDraw(GameTime gameTime) { }
-        public abstract void Draw(T1 component1, T2 component2, T3 component3, GameTime gameTime);
+        public virtual void Draw(T1 component1, T2 component2, T3 component3, GameTime gameTime) { }
     }
 }
