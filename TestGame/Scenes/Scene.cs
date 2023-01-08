@@ -15,6 +15,8 @@ namespace TestGame.Scenes
 
         public World World { get; private set; }
 
+        public void ShareUI(UIElement element) => UILayer.AddElement(element);
+
         protected virtual void CreateEntities() { }
         protected virtual void CreateSystems() { }
 

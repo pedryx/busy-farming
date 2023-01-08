@@ -7,9 +7,9 @@ namespace TestGame.UI
 {
     internal class UILayer
     {
-        private readonly List<UIControl> controls = new();
+        private readonly List<UIElement> controls = new();
 
-        public void AddControl(UIControl control)
+        public void AddElement(UIElement control)
         {
             controls.Add(control);
         }

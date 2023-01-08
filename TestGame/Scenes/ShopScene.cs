@@ -8,11 +8,6 @@ namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
-        public void SetInventoryUI(InventoryUI inventoryUI)
-        {
-            UILayer.AddControl(inventoryUI);
-        }
-
         protected override void CreateUI()
         {
             CreateLeaveButton();
@@ -49,7 +44,7 @@ namespace TestGame.Scenes
 
             button.Clicked += (sender, e) => Game.PopScene();
 
-            UILayer.AddControl(button);
+            UILayer.AddElement(button);
         }
     }
 }

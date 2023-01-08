@@ -6,7 +6,7 @@ using TestGame.Components;
 
 namespace TestGame.UI
 {
-    internal class InventoryUI : UIControl
+    internal class InventoryUI : UIElement
     {
         private readonly Inventory inventory;
 

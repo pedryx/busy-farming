@@ -15,7 +15,9 @@ namespace TestGame.Scenes
         private const int InitialInventorySize = 10;
         private const int InitialFarmColumns = 10;
 
+        private Vector2 windowSize;
         private InventoryUI inventoryUI;
+        private Label moneyCounter;
 
         private readonly ShopScene shopScene = new();
 
@@ -23,9 +25,17 @@ namespace TestGame.Scenes
 
         public override void Initialize(LDGame game)
         {
+            windowSize = new Vector2()
+            {
+                X = game.Graphics.PreferredBackBufferWidth,
+                Y = game.Graphics.PreferredBackBufferHeight,
+            };
+
             base.Initialize(game);
             shopScene.Initialize(game);
-            shopScene.SetInventoryUI(inventoryUI);
+
+            shopScene.ShareUI(inventoryUI);
+            shopScene.ShareUI(moneyCounter);
         }
 
         protected override void CreateSystems()
@@ -79,14 +89,12 @@ namespace TestGame.Scenes
         protected override void CreateUI()
         {
             CreateInventoryUI();
+            CreateMoneyCounter();
             CreateShopButton();
         }
 
         private void CreateInventoryUI()
         {
-            float screenWidth = Game.Graphics.PreferredBackBufferWidth;
-            float screenHeight = Game.Graphics.PreferredBackBufferHeight;
-
             // create UI
             inventoryUI = new(Inventory)
             {
@@ -112,21 +120,39 @@ namespace TestGame.Scenes
                 }],
             };
 
-            // center
             inventoryUI.Apperance.Position = new Vector2()
             {
-                X = screenWidth / 2 - (inventoryUI.Apperance.Size.X * InitialInventorySize) / 2,
-                Y = screenHeight * 0.99f - inventoryUI.Apperance.Size.Y,
+                X = windowSize.X / 2 - (inventoryUI.Apperance.Size.X * InitialInventorySize) / 2,
+                Y = windowSize.Y * 0.99f - inventoryUI.Apperance.Size.Y,
             };
 
-            UILayer.AddControl(inventoryUI);
+            UILayer.AddElement(inventoryUI);
+        }
+
+        private void CreateMoneyCounter()
+        {
+            moneyCounter = new Label()
+            {
+                Apperance = new Apperance(),
+                Font = Game.FontManager[new FontDescriptor()
+                {
+                    Name = "calibri",
+                    FontHeight = 32,
+                }],
+                Text = "Money: 0",
+            };
+
+            moneyCounter.Apperance.Position = new Vector2()
+            {
+                X = windowSize.X * 0.01f,
+                Y = windowSize.Y * 0.95f - moneyCounter.Size.Y,
+            };
+
+            UILayer.AddElement(moneyCounter);
         }
 
         private void CreateShopButton()
         {
-            float screenWidth = Game.Graphics.PreferredBackBufferWidth;
-            float screenHeight = Game.Graphics.PreferredBackBufferHeight;
-
             var button = new Button()
             {
                 Apperance = new Apperance()
@@ -147,8 +173,8 @@ namespace TestGame.Scenes
 
             button.Apperance.Position = new Vector2()
             {
-                X = screenWidth * 0.97f - button.Apperance.Size.X,
-                Y = screenHeight * 0.03f,
+                X = windowSize.X * 0.98f - button.Apperance.Size.X,
+                Y = windowSize.Y * 0.03f,
             };
 
             button.Clicked += (sender, e) =>
@@ -157,7 +183,7 @@ namespace TestGame.Scenes
                 Game.PushScene(shopScene);
             };
 
-            UILayer.AddControl(button);
+            UILayer.AddElement(button);
         }
     }
 }

@@ -5,7 +5,7 @@ using TestGame.Components;
 
 namespace TestGame.UI
 {
-    internal abstract class UIControl
+    internal abstract class UIElement
     {
         public Apperance Apperance;
 

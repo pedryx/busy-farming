@@ -6,7 +6,7 @@ using System;
 
 namespace TestGame.UI
 {
-    internal class Button : UIControl
+    internal class Button : UIElement
     {
         public event EventHandler Clicked;
 
