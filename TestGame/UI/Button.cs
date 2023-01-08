@@ -11,7 +11,7 @@ namespace TestGame.UI
         public event EventHandler Clicked;
 
         public SpriteFont Font;
-        public string Text;
+        public string Text = "";
 
         public override void Update()
         {
@@ -22,6 +22,9 @@ namespace TestGame.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
+            if (Font == null)
+                return;
 
             Vector2 size = Font.MeasureString(Text);
             Vector2 position = Apperance.Position + Apperance.Size / 2 - size / 2;

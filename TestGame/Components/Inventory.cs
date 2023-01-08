@@ -8,6 +8,8 @@ namespace TestGame.Components
         public List<Item> Slots = new();
         public int Selected = -1;
         public int Coins;
+        public float CurrentWater;
+        public float MaxWater;
 
         public Item SelectedItem => Selected == -1 ? null : Slots[Selected];
 

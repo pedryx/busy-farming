@@ -107,6 +107,31 @@ namespace TestGame.Scenes
             CreateInventoryUI();
             CreateMoneyCounter();
             CreateShopButton();
+            CreateLake();
+        }
+
+        private void CreateLake()
+        {
+            var lake = new Button()
+            {
+                Apperance = new Apperance()
+                {
+                    Sprite = new Sprite()
+                    {
+                        Texture = Game.SpriteManager["terrain_atlas"],
+                        SourceRectange = new Rectangle(192, 352, 96, 96),
+                    },
+                    Scale = new Vector2(3),
+                },
+            };
+
+            lake.Apperance.Position = new Vector2()
+            {
+                X = -lake.Apperance.Size.X * 0.4f,
+                Y = windowSize.Y / 2 - lake.Apperance.Size.Y / 2,
+            };
+
+            UILayer.AddElement(lake);
         }
 
         private void CreateInventoryUI()
