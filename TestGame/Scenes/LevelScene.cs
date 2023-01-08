@@ -46,6 +46,7 @@ namespace TestGame.Scenes
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, Game.Camera, this))
                 .AddSystem(new PlantSystem(this));
+                //.AddSystem(new ProgressBarRenderSystem(Game.SpriteBatch, Game.Camera, Game.GraphicsDevice));
         }
 
         protected override void CreateEntities()

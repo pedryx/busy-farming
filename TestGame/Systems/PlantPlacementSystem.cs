@@ -80,9 +80,18 @@ namespace TestGame.Systems
                         var plant = plantType.CreatePlant();
                         plant.FarmPlot = farmPlot;
 
+                        var progressBar = new ProgressBar()
+                        {
+                            StartValue = 0,
+                            EndValue = plant.MaxWater,
+                            CurrentValue = plant.CurrentWater,
+                            Color = Color.Blue,
+                        };
+
                         var plantEntity = CreateEntity();
                         plantEntity.Attach(plantApperance);
                         plantEntity.Attach(plant);
+                        plantEntity.Attach(progressBar);
 
                         farmPlot.Occupied = true;
                         inventory.SelectedItem.Quantity--;
