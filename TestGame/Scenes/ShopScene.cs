@@ -56,7 +56,7 @@ namespace TestGame.Scenes
             var font = Game.FontManager[new FontDescriptor()
             {
                 Name = "calibri",
-                FontHeight = 16,
+                FontHeight = 20,
             }];
 
             int typeID = 0;
@@ -80,20 +80,41 @@ namespace TestGame.Scenes
                     if (typeID >= PlantType.Types.Count)
                         continue;
 
-                    // create image for tile
+                    // create image for tile item
                     var type = PlantType.Types[typeID++];
 
                     var itemApperance = apperance.Clone();
                     itemApperance.Sprite = PlantUtils.CreatePlantSprite(type, PlantUtils.PlantStages - 1);
-                    itemApperance.Scale = new Vector2((apperance.Size.Y * 0.8f) /
+                    itemApperance.Scale = new Vector2((apperance.Size.Y * 0.5f) /
                         itemApperance.NotScaledSize.Y);
                     itemApperance.Center(apperance);
+                    itemApperance.Position.Y -= apperance.Size.Y * 0.1f;
 
                     var image = new Image()
                     {
                         Apperance = itemApperance,
                     };
                     UILayer.AddElement(image);
+
+                    // create price label
+                    string text = $"{type.Price / 2}";
+                    var size = font.MeasureString(text);
+                    var position = apperance.Position + new Vector2()
+                    {
+                        X = apperance.Size.X / 2 - size.X / 2,
+                        Y = apperance.Size.Y * 0.9f - size.Y,
+                    };
+
+                    var label = new Label()
+                    {
+                        Apperance = new Apperance()
+                        {
+                            Position = position,
+                        },
+                        Font = font,
+                        Text = text,
+                    };
+                    UILayer.AddElement(label);
                 }
             }
         }
