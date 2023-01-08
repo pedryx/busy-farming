@@ -14,7 +14,7 @@ namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
-        private const int InitialInventorySize = 3;
+        private const int InitialInventorySize = 10;
         private const int InitialFarmColumns = 10;
 
         private Vector2 windowSize;
@@ -70,14 +70,14 @@ namespace TestGame.Scenes
             var inventoryEntity = World.CreateEntity();
             inventoryEntity.Attach(Inventory);
 
-            Inventory.Slots[0] = new WaterCan(-1)
+            /*Inventory.Slots[0] = new WaterCan(-1)
             {
                 Quantity = 1,
                 Sprite = new Sprite()
                 {
                     Texture = Game.SpriteManager["water_can"],
                 },
-            };
+            };*/
 #if SCREENSHOT
             for (int i = 1; i < PlantType.Types.Count; i++)
             {
@@ -96,7 +96,7 @@ namespace TestGame.Scenes
             PlantSystem.PlantDecay = false;
 #else
             var carrotType = PlantType.GetType("carrot");
-            Inventory.Slots[1] = new SeedItem(carrotType.PlantID)
+            Inventory.Slots[0] = new SeedItem(carrotType.PlantID)
             {
                 Quantity = 4,
                 Type = carrotType,
