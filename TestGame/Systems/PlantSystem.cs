@@ -44,6 +44,7 @@ namespace TestGame.Systems
                     {
                         Quantity = plant.Yield,
                         Sprite = plant.Type.ProductSprite,
+                        Price = plant.Type.Price,
                     };
                 }
                 else

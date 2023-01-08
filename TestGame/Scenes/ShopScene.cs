@@ -54,7 +54,8 @@ namespace TestGame.Scenes
 
         public void SellItem(Item item)
         {
-            
+            inventory.Coins += item.Price;
+            item.Quantity--;
         }
     }
 }

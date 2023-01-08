@@ -75,6 +75,7 @@ namespace TestGame.Scenes
                         PlantType.Types[i],
                         PlantUtils.PlantStages - 1
                     ),
+                    Price = PlantType.Types[i].Price / 2,
                 };
                 Inventory.Slots[i].Quantity = 10;
             }

@@ -8,6 +8,7 @@ namespace TestGame
         public int Quantity;
         public Sprite Sprite;
         public int ID;
+        public int Price;
 
         public Item(int id)
         {
