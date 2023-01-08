@@ -32,22 +32,36 @@ namespace TestGame.Systems
 
             var inventory = scene.Inventory;
 
-            if (inventory.SelectedItem is not SeedItem || inventory.SelectedItem.Quantity == 0)
+            if (!((inventory.SelectedItem is SeedItem || inventory.SelectedItem is WaterCan) &&
+                inventory.SelectedItem.Quantity != 0))
+            {
                 return;
+            }
 
             if (apperance.Rectangle.Contains(Input.MousePositionTransformed))
             {
                 // render ghost plant
                 var ghostApperance = apperance.Clone();
 
-                ghostApperance.Sprite = PlantUtils.CreatePlantSprite(
-                    (inventory.Slots[inventory.Selected] as SeedItem).Type,
-                    0
-                );
+                if (inventory.SelectedItem is SeedItem)
+                {
+                    ghostApperance.Sprite = PlantUtils.CreatePlantSprite(
+                        (inventory.Slots[inventory.Selected] as SeedItem).Type,
+                        0
+                    );
+                }
+                else
+                {
+                    ghostApperance.Sprite = inventory.SelectedItem.Sprite.Clone();
+                }
                 ghostApperance.Sprite.Color.A = 128;
 
-                ghostApperance.Scale = new Vector2(ghostApperance.NotScaledSize.Y
-                    / (apperance.Size.Y * 1.4f));
+                float biggerSide = MathHelper.Max(
+                    ghostApperance.NotScaledSize.X,
+                    ghostApperance.NotScaledSize.Y
+                );
+                float m = inventory.SelectedItem is Plant ? 1.4f : 0.9f;
+                ghostApperance.Scale = new Vector2(apperance.Size.Y * m) / biggerSide;
                 ghostApperance.Center(apperance);
                 ghostApperance.Position.Y -= ghostApperance.Size.Y / 3;
 
@@ -55,24 +69,31 @@ namespace TestGame.Systems
 
                 if (Input.LeftMouseClicked)
                 {
-                    // plant a seed
-                    var plantType = (inventory.Slots[inventory.Selected] as SeedItem).Type;
-                    var plantApperance = ghostApperance.Clone();
-                    plantApperance.Sprite = PlantUtils.CreatePlantSprite(plantType, 0);
-                    plantApperance.Layer = plantApperance.Position.Y / 3000;
-
-                    var plant = plantType.CreatePlant();
-                    plant.FarmPlot = farmPlot;
-
-                    var plantEntity = CreateEntity();
-                    plantEntity.Attach(plantApperance);
-                    plantEntity.Attach(plant);
-
-                    farmPlot.Occupied = true;
-                    inventory.SelectedItem.Quantity--;
-                    if (inventory.SelectedItem.Quantity == 0)
+                    if (inventory.SelectedItem is SeedItem)
                     {
-                        inventory.Selected = -1;
+                        // plant a seed
+                        var plantType = (inventory.Slots[inventory.Selected] as SeedItem).Type;
+                        var plantApperance = ghostApperance.Clone();
+                        plantApperance.Sprite = PlantUtils.CreatePlantSprite(plantType, 0);
+                        plantApperance.Layer = plantApperance.Position.Y / 3000;
+
+                        var plant = plantType.CreatePlant();
+                        plant.FarmPlot = farmPlot;
+
+                        var plantEntity = CreateEntity();
+                        plantEntity.Attach(plantApperance);
+                        plantEntity.Attach(plant);
+
+                        farmPlot.Occupied = true;
+                        inventory.SelectedItem.Quantity--;
+                        if (inventory.SelectedItem.Quantity == 0)
+                        {
+                            inventory.Selected = -1;
+                        }
+                    }
+                    else if (inventory.SelectedItem is WaterCan)
+                    {
+                        System.Console.WriteLine("Watering!");
                     }
                 }
             }

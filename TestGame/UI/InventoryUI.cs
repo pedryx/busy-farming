@@ -72,8 +72,11 @@ namespace TestGame.UI
                     // draw item icon
                     var itemApperance = apperance.Clone();
                     itemApperance.Sprite = inventory.Slots[i].Sprite;
-                    itemApperance.Scale = new Vector2((apperance.Size.Y * 0.8f) /
-                        itemApperance.NotScaledSize.Y);
+                    float biggerSide = MathHelper.Max(
+                        itemApperance.NotScaledSize.X,
+                        itemApperance.NotScaledSize.Y
+                    );
+                    itemApperance.Scale = new Vector2(apperance.Size.X * 0.8f) / biggerSide;
                     itemApperance.Center(apperance);
                     itemApperance.Draw(spriteBatch);
 

@@ -1,4 +1,4 @@
-﻿#define SCREENSHOT
+﻿//#define SCREENSHOT
 
 using Microsoft.Xna.Framework;
 
@@ -14,12 +14,12 @@ namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
-        private const int InitialInventorySize = 10;
+        private const int InitialInventorySize = 3;
         private const int InitialFarmColumns = 10;
 
         private Vector2 windowSize;
         private InventoryUI inventoryUI;
-        private CoinsCounter moneyCounter;
+        private MiscCounter miscCounter;
 
         private readonly ShopScene shopScene = new();
 
@@ -35,7 +35,7 @@ namespace TestGame.Scenes
 
             base.Initialize(game);
             shopScene.ShareUI(inventoryUI);
-            shopScene.ShareUI(moneyCounter);
+            shopScene.ShareUI(miscCounter);
             shopScene.SetInvetory(Inventory);
             shopScene.Initialize(game);
         }
@@ -63,12 +63,22 @@ namespace TestGame.Scenes
             Inventory = new Inventory();
             for (int i = 0; i < InitialInventorySize; i++)
                 Inventory.Slots.Add(null);
+            Inventory.MaxWater = 1;
+            Inventory.CurrentWater = 1;
 
             var inventoryEntity = World.CreateEntity();
             inventoryEntity.Attach(Inventory);
 
+            Inventory.Slots[0] = new WaterCan(-1)
+            {
+                Quantity = 1,
+                Sprite = new Sprite()
+                {
+                    Texture = Game.SpriteManager["water_can"],
+                },
+            };
 #if SCREENSHOT
-            for (int i = 0; i < PlantType.Types.Count; i++)
+            for (int i = 1; i < PlantType.Types.Count; i++)
             {
                 Inventory.Slots[i] = new SeedItem(PlantType.Types[i].PlantID)
                 {
@@ -85,7 +95,7 @@ namespace TestGame.Scenes
             PlantSystem.PlantDecay = false;
 #else
             var carrotType = PlantType.GetType("carrot");
-            Inventory.Slots[0] = new SeedItem(carrotType.PlantID)
+            Inventory.Slots[1] = new SeedItem(carrotType.PlantID)
             {
                 Quantity = 4,
                 Type = carrotType,
@@ -105,7 +115,7 @@ namespace TestGame.Scenes
         protected override void CreateUI()
         {
             CreateInventoryUI();
-            CreateMoneyCounter();
+            CreateMiscCounter();
             CreateShopButton();
             CreateLake();
         }
@@ -182,26 +192,26 @@ namespace TestGame.Scenes
             UILayer.AddElement(inventoryUI);
         }
 
-        private void CreateMoneyCounter()
+        private void CreateMiscCounter()
         {
-            moneyCounter = new CoinsCounter(Inventory)
+            miscCounter = new MiscCounter(Inventory)
             {
                 Apperance = new Apperance(),
                 Font = Game.FontManager[new FontDescriptor()
                 {
                     Name = "calibri",
-                    FontHeight = 32,
+                    FontHeight = 28,
                 }],
-                Text = "Coins: 0000"
+                Text = "Coins: 0000\nWater: 0000/0000",
             };
 
-            moneyCounter.Apperance.Position = new Vector2()
+            miscCounter.Apperance.Position = new Vector2()
             {
                 X = windowSize.X * 0.01f,
-                Y = windowSize.Y * 0.95f - moneyCounter.Size.Y,
+                Y = windowSize.Y * 0.95f - miscCounter.Size.Y,
             };
 
-            UILayer.AddElement(moneyCounter);
+            UILayer.AddElement(miscCounter);
         }
 
         private void CreateShopButton()

@@ -3,18 +3,18 @@
 
 namespace TestGame.UI
 {
-    internal class CoinsCounter : Label
+    internal class MiscCounter : Label
     {
         private readonly Inventory inventory;
 
-        public CoinsCounter(Inventory inventory)
+        public MiscCounter(Inventory inventory)
         {
             this.inventory = inventory;
         }
 
         public override void Update()
         {
-            Text = $"Coins: {inventory.Coins}";
+            Text = $"Coins: {inventory.Coins}\nWater: {inventory.CurrentWater}/{inventory.MaxWater}";
         }
     }
 }

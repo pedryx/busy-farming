@@ -27,4 +27,9 @@ namespace TestGame
     {
         public ProductItem(int id) : base(id) { }
     }
+
+    internal class WaterCan : Item
+    {
+        public WaterCan(int id) : base(id) { }
+    }
 }
