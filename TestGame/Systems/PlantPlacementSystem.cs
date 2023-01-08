@@ -10,12 +10,20 @@ namespace TestGame.Systems
     internal class PlantPlacementSystem : EntityDrawSystem<Apperance, FarmPlot>
     {
         private readonly LevelScene scene;
+        private readonly Camera camera;
 
-        public PlantPlacementSystem(SpriteBatch spriteBatch, LevelScene scene) 
+        public PlantPlacementSystem(SpriteBatch spriteBatch, Camera camera, LevelScene scene) 
             : base(spriteBatch)
         {
             this.scene = scene;
+            this.camera = camera;
         }
+
+        public override void PreDraw(GameTime gameTime)
+            => SpriteBatch.Begin(transformMatrix: camera.GetTransform());
+
+        public override void PostDraw(GameTime gameTime)
+            => SpriteBatch.End();
 
         public override void Draw(Apperance apperance, FarmPlot farmPlot, GameTime gameTime)
         {
@@ -31,11 +39,19 @@ namespace TestGame.Systems
             {
                 // render ghost plant
                 var ghostApperance = apperance.Clone();
-                ghostApperance.Scale = new Vector2((apperance.Scale.Y * 1.5f) /
-                    ghostApperance.NotScaledSize.Y);
-                ghostApperance.Center(apperance);
-                ghostApperance.Sprite = inventory.Slots[inventory.Selected].Sprite;
+
+                ghostApperance.Sprite = PlantUtils.CreatePlantSprite(
+                    (inventory.Slots[inventory.Selected] as SeedItem).Type,
+                    0
+                );
                 ghostApperance.Sprite.Color.A = 128;
+
+                ghostApperance.Scale = new Vector2(ghostApperance.NotScaledSize.Y
+                    / (apperance.Size.Y * 1.4f));
+                ghostApperance.Center(apperance);
+                ghostApperance.Position.Y -= ghostApperance.Size.Y / 3;
+
+                ghostApperance.Draw(SpriteBatch);
 
                 if (Input.LeftMouseClicked)
                 {
@@ -45,6 +61,7 @@ namespace TestGame.Systems
                     var plantType = (inventory.Slots[inventory.Selected] as SeedItem).Type;
                     var plantApperance = ghostApperance.Clone();
                     plantApperance.Sprite = PlantUtils.CreatePlantSprite(plantType, 0);
+                    plantApperance.Layer = plantApperance.Position.Y / 3000;
 
                     var plantEntity = CreateEntity();
                     plantEntity.Attach(plantApperance);

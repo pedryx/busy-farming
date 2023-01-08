@@ -21,7 +21,7 @@ namespace TestGame.Scenes
         {
             Builder
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
-                .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, this))
+                .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, Game.Camera, this))
                 .AddSystem(new PlantSystem());
         }
 
@@ -29,6 +29,7 @@ namespace TestGame.Scenes
         {
             PlantUtils.FarmPlotTexture = Game.SpriteManager["plowed_soil"];
             PlantUtils.PlantsTexture = Game.SpriteManager["crops2"];
+            PlantUtils.CalcFarmPosition(Game.Graphics);
 
             CreateFarm();
             CreateInventory();
@@ -49,7 +50,10 @@ namespace TestGame.Scenes
                 {
                     Quantity = 10,
                     Type = PlantType.Types[i],
-                    Sprite = PlantType.Types[i].Sprite
+                    Sprite = PlantUtils.CreatePlantSprite(
+                        PlantType.Types[i],
+                        PlantUtils.PlantStages - 1
+                    ),
                 };
                 Inventory.Slots[i].Quantity = 10;
             }
@@ -74,9 +78,15 @@ namespace TestGame.Scenes
                     Sprite = new Sprite()
                     {
                         Texture = Game.SpriteManager["scrollsandblocks"],
-                        SourceRectange = new Rectangle(96, 224 - 96, 96, 96),
+                        SourceRectange = new Rectangle(96, 128, 96, 96),
                         Color = new Color(1.0f, 1.0f, 1.0f, 0.7f),
                     },
+                },
+                ClickedSprite = new Sprite()
+                {
+                    Texture = Game.SpriteManager["scrollsandblocks"],
+                    SourceRectange = new Rectangle(0, 128, 96, 96),
+                    Color = new Color(1.0f, 1.0f, 1.0f, 0.7f),
                 },
                 Font = Game.FontManager[new FontDescriptor()
                 {
@@ -89,7 +99,7 @@ namespace TestGame.Scenes
             inventoryUI.Apperance.Position = new Vector2()
             {
                 X = screenWidth / 2 - (inventoryUI.Apperance.Size.X * InitialInventorySize) / 2,
-                Y = screenHeight - inventoryUI.Apperance.Size.Y,
+                Y = screenHeight * 0.99f - inventoryUI.Apperance.Size.Y,
             };
 
             UILayer.AddControl(inventoryUI);

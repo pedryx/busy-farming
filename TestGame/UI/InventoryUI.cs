@@ -25,9 +25,9 @@ namespace TestGame.UI
             {
                 if (apperance.Rectangle.Contains(Input.MousePosition) && Input.LeftMouseClicked)
                 {
-                    float totalWidth = inventory.Slots.Count * Apperance.Size.X;
-                    inventory.Selected = (int)((Input.MousePosition.X - Apperance.Position.X) / totalWidth);
+                    inventory.Selected = i;
                 }
+                apperance.Position.X += apperance.Size.X;
             }
 
             if (Input.RightMouseClicked)
@@ -39,8 +39,8 @@ namespace TestGame.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             var apperance = Apperance.Clone();
-            var clickedSprite = ClickedSprite;
-            var notClickedSprite = Apperance.Sprite;
+            var clickedSprite = ClickedSprite.Clone();
+            var notClickedSprite = Apperance.Sprite.Clone();
 
             for (int i = 0; i < inventory.Slots.Count; ++i)
             {
@@ -51,6 +51,7 @@ namespace TestGame.UI
                 {
                     // draw item icon
                     var itemApperance = apperance.Clone();
+                    itemApperance.Sprite = inventory.Slots[i].Sprite;
                     itemApperance.Scale = new Vector2((apperance.Size.Y * 0.8f) /
                         itemApperance.NotScaledSize.Y);
                     itemApperance.Center(apperance);

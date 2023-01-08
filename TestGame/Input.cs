@@ -20,20 +20,18 @@ namespace TestGame
 
             // left button
             bool currentLeftButtonState = state.LeftButton == ButtonState.Pressed;
-            if (lastLeftButtonState && !currentLeftButtonState)
-                LeftMouseClicked = true;
+            LeftMouseClicked = lastLeftButtonState && !currentLeftButtonState;
             lastLeftButtonState = currentLeftButtonState;
 
             // right button
-            bool currentRightButtonState = state.LeftButton == ButtonState.Pressed;
-            if (lastRightButtonState && !currentRightButtonState)
-                RightMouseClicked = true;
+            bool currentRightButtonState = state.RightButton == ButtonState.Pressed;
+            RightMouseClicked = lastRightButtonState && !currentRightButtonState;
             lastRightButtonState = currentRightButtonState;
 
             // mouse position
             MousePosition = new Vector2(state.X, state.Y);
 
-            // transformed mouse position
+            // mouse position transformed
             MousePositionTransformed = Vector2.Transform(
                 MousePosition,
                 Matrix.Invert(camera.GetTransform())

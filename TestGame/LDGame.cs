@@ -18,7 +18,7 @@ namespace TestGame
         public SpriteManager SpriteManager { get; private set; }
         public FontManager FontManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
-        public Camera Camera { get; private set; }
+        public Camera Camera { get; private set; } = new();
 
         public LDGame()
         {
@@ -28,7 +28,6 @@ namespace TestGame
                 PreferredBackBufferHeight = 720,
             };
             IsMouseVisible = true;
-            Camera = new Camera(Graphics);
         }
 
         public void Run<T>()
@@ -61,6 +60,7 @@ namespace TestGame
 
         protected override void Update(GameTime gameTime)
         {
+            Input.Update(Camera);
             currentScene.Update(gameTime);
 
             base.Update(gameTime);

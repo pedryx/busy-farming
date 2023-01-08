@@ -12,67 +12,77 @@ namespace TestGame
 {
     internal static class PlantUtils
     {
-        private const int columnSize = 20;
+        private const int rowSize = 20;
         private const float tileScale = 1.5f;
         private const int tileSize = 32;
         private const int borderSize = 32;
-        private const int yOffset = 64;
+        private const int sourceYOffset = 64;
         private const int plantTileWidth = 32;
         private const int plantTileHeight = 64;
 
         public const int PlantStages = 4;
 
-        private static readonly Vector2 farmPosition = new(-540, -260);
-        private static readonly Entity[] lastColumn = new Entity[columnSize];
+        private static readonly Entity[] lastRow = new Entity[rowSize];
+
+        private static Vector2 farmPosition;
 
         public static Texture2D FarmPlotTexture;
         public static Texture2D PlantsTexture;
 
-        public static int FarmColumns { get; private set; }
+        public static int FarmRows { get; private set; }
+
+        public static void CalcFarmPosition(GraphicsDeviceManager graphics)
+        {
+            float size = tileSize * tileScale;
+            float width = size * rowSize;
+
+            farmPosition.X = graphics.PreferredBackBufferWidth / 2 - width / 2;
+            farmPosition.Y = graphics.PreferredBackBufferHeight * 0.05f;
+        }
 
         public static void CreateFarmColumn(World world)
         {
-            if (FarmColumns != 0)
+            if (FarmRows != 0)
             {
-                // change border for previous column and attach farm plot components
-                for (int i = 0; i < columnSize; i++)
+                // change border for previous row and attach farm plot components
+                for (int i = 0; i < rowSize; i++)
                 {
-                    var entity = lastColumn[i];
+                    var entity = lastRow[i];
 
                     // change border
                     var apperance = entity.Get<Apperance>();
                     var sourceRectangle = apperance.Sprite.SourceRectange.Value;
-                    sourceRectangle.X -= tileSize;
+                    sourceRectangle.Y -= tileSize;
                     apperance.Sprite.SourceRectange = sourceRectangle;
 
                     // attach farm plot component
-                    if (i != 0 && i != columnSize - 1)
+                    if (i != 0 && i != rowSize - 1)
                     {
                         entity.Attach(new FarmPlot());
                     }
                 }
             }
 
-            // create new column
-            for (int i = 0; i < columnSize; i++)
+            // create new row
+            for (int i = 0; i < rowSize; i++)
             {
                 var entity = world.CreateEntity();
 
                 // create apperance
                 Rectangle sourceRectangle = new()
                 {
-                    X = borderSize + tileSize,
-                    Y = yOffset + borderSize,
+                    X = borderSize,
+                    Y = sourceYOffset + borderSize + tileSize,
                     Width = tileSize,
                     Height = tileSize,
                 };
 
                 if (i == 0)
-                    sourceRectangle.Y -= borderSize;
-                if (i == columnSize - 1)
-                    sourceRectangle.Y += borderSize;
-                if (FarmColumns == 0)
                     sourceRectangle.X -= borderSize;
+                if (i == rowSize - 1)
+                    sourceRectangle.X += tileSize;
+                if (FarmRows == 0)
+                    sourceRectangle.Y -= borderSize;
 
                 entity.Attach(new Apperance()
                 {
@@ -83,14 +93,16 @@ namespace TestGame
                     },
                     Position = new Vector2()
                     {
-                        X = FarmColumns * tileSize * tileScale,
-                        Y = i * tileSize * tileScale,
+                        X = i * tileSize * tileScale,
+                        Y = FarmRows * tileSize * tileScale,
                     } + farmPosition,
                     Scale = new Vector2(tileScale),
                 });
 
-                lastColumn[i] = entity;
+                lastRow[i] = entity;
             }
+
+            FarmRows++;
         }
 
         public static Sprite CreatePlantSprite(PlantType plant, int stage) => new()

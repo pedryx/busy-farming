@@ -10,6 +10,7 @@ namespace TestGame.Components
         public Vector2 Scale = Vector2.One;
         public Sprite Sprite;
         public bool Static = false;
+        public float Layer = 0;
 
         public Vector2 NotScaledSize
         {
@@ -23,8 +24,8 @@ namespace TestGame.Components
                 {
                     return new Vector2()
                     {
-                        X = Sprite.SourceRectange.Value.X,
-                        Y = Sprite.SourceRectange.Value.Y,
+                        X = Sprite.SourceRectange.Value.Width,
+                        Y = Sprite.SourceRectange.Value.Height,
                     };
                 }
             }
@@ -45,7 +46,7 @@ namespace TestGame.Components
                 Vector2.Zero,
                 Scale,
                 SpriteEffects.None,
-                0
+                Layer
             );
         }
 

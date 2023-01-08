@@ -14,6 +14,11 @@ namespace TestGame.Resources
         }
 
         public override Texture2D Load(string path)
-            => Texture2D.FromFile(device, path);
+        {
+            var texture = Texture2D.FromFile(device, path);
+            texture.Name = path;
+
+            return texture;
+        }
     }
 }

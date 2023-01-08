@@ -22,13 +22,13 @@ namespace TestGame.Systems
         {
             // non static render
             staticDraw = false;
-            SpriteBatch.Begin(transformMatrix: camera.GetTransform());
+            SpriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.GetTransform());
             base.Draw(gameTime);
             SpriteBatch.End();
 
             // static render
             staticDraw = true;
-            SpriteBatch.Begin();
+            SpriteBatch.Begin(SpriteSortMode.FrontToBack);
             base.Draw(gameTime);
             SpriteBatch.End();
         }
