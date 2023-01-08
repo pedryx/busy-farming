@@ -141,6 +141,12 @@ namespace TestGame.Scenes
                 Y = windowSize.Y / 2 - lake.Apperance.Size.Y / 2,
             };
 
+            lake.Clicked += (sender, e) =>
+            {
+                if (Inventory.SelectedItem is WaterCan)
+                    Inventory.CurrentWater = Inventory.MaxWater;
+            };
+
             UILayer.AddElement(lake);
         }
 
