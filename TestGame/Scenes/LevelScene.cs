@@ -82,6 +82,7 @@ namespace TestGame.Scenes
                 };
                 Inventory.Slots[i].Quantity = 10;
             }
+            PlantSystem.PlantDecay = false;
 #else
             var carrotType = PlantType.GetType("carrot");
             Inventory.Slots[0] = new SeedItem(carrotType.PlantID)

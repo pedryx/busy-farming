@@ -10,6 +10,8 @@ namespace TestGame.Systems
     {
         private readonly LevelScene scene;
 
+        public static bool PlantDecay = true;
+
         public PlantSystem(LevelScene scene)
         {
             this.scene = scene;
@@ -31,8 +33,11 @@ namespace TestGame.Systems
                 if (plant.CurrentGrow >= plant.GrowDuration + plant.Type.MaxOvergrow)
                 {
                     plant.CurrentGrow = plant.GrowDuration + plant.Type.MaxOvergrow;
-                    plant.Decayed = true;
-                    apperance.Sprite.Color = Color.Black;
+                    if (PlantDecay)
+                    {
+                        plant.Decayed = true;
+                        apperance.Sprite.Color = Color.Black;
+                    }
                 }
 
                 if (!Input.LeftClickOn(apperance) || inventory.Selected != -1)
