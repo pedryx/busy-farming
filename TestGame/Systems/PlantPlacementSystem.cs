@@ -27,9 +27,6 @@ namespace TestGame.Systems
 
         public override void Draw(Apperance apperance, FarmPlot farmPlot, GameTime gameTime)
         {
-            if (farmPlot.Occupied)
-                return;
-
             var inventory = scene.Inventory;
 
             if (!((inventory.SelectedItem is SeedItem || inventory.SelectedItem is WaterCan) &&
@@ -37,6 +34,9 @@ namespace TestGame.Systems
             {
                 return;
             }
+
+            if (farmPlot.Occupied && inventory.SelectedItem is SeedItem)
+                return;
 
             if (apperance.Rectangle.Contains(Input.MousePositionTransformed))
             {
@@ -60,7 +60,7 @@ namespace TestGame.Systems
                     ghostApperance.NotScaledSize.X,
                     ghostApperance.NotScaledSize.Y
                 );
-                float m = inventory.SelectedItem is Plant ? 1.4f : 0.9f;
+                float m = inventory.SelectedItem is SeedItem ? 1.4f : 0.9f;
                 ghostApperance.Scale = new Vector2(apperance.Size.Y * m) / biggerSide;
                 ghostApperance.Center(apperance);
                 ghostApperance.Position.Y -= ghostApperance.Size.Y / 3;
