@@ -8,7 +8,7 @@ namespace TestGame
 {
     internal class PlantType
     {
-        private const float maxPlantWater = 5.0f;
+        private const float maxPlantWater = 10.0f;
 
         private static int lastPlantID;
         private static readonly List<PlantType> types = new()
