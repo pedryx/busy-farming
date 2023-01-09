@@ -25,7 +25,7 @@ namespace TestGame.Systems
             // update water
             if (!plant.Decayed && plant.CurrentGrow < plant.GrowDuration)
             {
-                plant.CurrentWater -= ellaped;
+                plant.CurrentWater -= ellaped * GlobalModifiers.WaterDecreaseSpeed;
                 progressBar.CurrentValue = plant.CurrentWater;
                 if (plant.CurrentWater <= 0)
                 {

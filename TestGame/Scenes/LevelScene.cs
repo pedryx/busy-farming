@@ -52,8 +52,9 @@ namespace TestGame.Scenes
                 .AddSystem(new RenderSystem(Game.SpriteBatch, Game.Camera))
                 .AddSystem(new PlantPlacementSystem(Game.SpriteBatch, Game.Camera, this))
                 .AddSystem(new PlantSystem(this))
-                .AddSystem(new ProgressBarRenderSystem(Game.SpriteBatch, Game.Camera, Game.GraphicsDevice))
-                .AddSystem(new WeedSpawnSystem(weedSprite));
+                .AddSystem(new ProgressBarRenderSystem(Game))
+                .AddSystem(new WeedSpawnSystem(weedSprite))
+                .AddSystem(new WeatherSystem(Game));
         }
 
         protected override void CreateEntities()

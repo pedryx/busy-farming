@@ -16,16 +16,12 @@ namespace TestGame.Systems
         private readonly Camera camera;
         private readonly Texture2D texture;
 
-        public ProgressBarRenderSystem(
-            SpriteBatch spriteBatch,
-            Camera camera, 
-            GraphicsDevice device
-        ) 
-            : base(spriteBatch)
+        public ProgressBarRenderSystem(LDGame game) 
+            : base(game.SpriteBatch)
         {
-            this.camera = camera;
+            camera = game.Camera;
 
-            texture = new Texture2D(device, 1, 1);
+            texture = new Texture2D(game.GraphicsDevice, 1, 1);
             texture.SetData(new Color[] { Color.White });
         }
 
