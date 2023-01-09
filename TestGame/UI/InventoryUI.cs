@@ -42,13 +42,14 @@ namespace TestGame.UI
             var apperance = Apperance.Clone();
             for (int i = 0; i < inventory.Slots.Count; i++)
             {
-                if (apperance.Rectangle.Contains(Input.MousePosition) && Input.LeftMouseClicked)
+                if (inventory.Slots[i] != null && inventory.Slots[i].Quantity != 0)
                 {
-                    if (inventory.Slots[i] != null && inventory.Slots[i].Quantity != 0)
+                    if (apperance.Rectangle.Contains(Input.MousePosition))
                     {
-                        LeftClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
-                        RightClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
-                        break;
+                        if (Input.LeftMouseClicked)
+                            LeftClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
+                        else if (Input.RightMouseClicked)
+                            RightClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
                     }
                 }
                 apperance.Position.X += apperance.Size.X;

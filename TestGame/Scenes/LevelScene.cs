@@ -209,7 +209,14 @@ namespace TestGame.Scenes
                 }
                 else if (Game.CurrentScene is ShopScene)
                 {
-                    shopScene.SellItem(e.Inventory.Slots[e.Slot]);
+                    shopScene.SellItem(e.Inventory.Slots[e.Slot], 1);
+                }
+            };
+            inventoryUI.RightClicked += (sender, e) =>
+            {
+                if (Game.CurrentScene is ShopScene)
+                {
+                    shopScene.SellItem(e.Inventory.Slots[e.Slot], e.Inventory.Slots[e.Slot].Quantity);
                 }
             };
 

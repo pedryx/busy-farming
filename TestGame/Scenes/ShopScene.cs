@@ -13,19 +13,19 @@ namespace TestGame.Scenes
     internal class ShopScene : Scene
     {
         private const float wateringUpgradeStep = 0.1f;
-        private const int wateringUpgradePrice = 100;
+        private const int wateringUpgradePrice = 50;
 
         private const float plantOvergrownUpgradeStep = 0.1f;
-        private const int plantOvergrownUpragePrice = 100;
+        private const int plantOvergrownUpragePrice = 50;
 
         private const float rainChanceUpgradeStep = 0.1f;
         private const float maxRainChangeUpgrade = 0.7f;
-        private const int rainChanceUpgradePrice = 100;
+        private const int rainChanceUpgradePrice = 50;
 
-        private const int waterCanUpgradePrice = 100;
+        private const int waterCanUpgradePrice = 50;
 
         private const int maxInventorySlots = 10;
-        private const int inventoryUpgradePrice = 100;
+        private const int inventoryUpgradePrice = 50;
 
         private const int rowSize = 7;
         private const int columnSize = 4;
@@ -320,10 +320,10 @@ namespace TestGame.Scenes
             UILayer.AddElement(button);
         }
 
-        public void SellItem(Item item)
+        public void SellItem(Item item, int quantity)
         {
-            inventory.Coins += item.Price;
-            item.Quantity--;
+            inventory.Coins += item.Price * quantity;
+            item.Quantity -= quantity;
         }
     }
 }

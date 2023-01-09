@@ -15,7 +15,7 @@ namespace TestGame
         {
             new PlantType(00, 00, 09, 12, 2, 4, 18, 10, "potatoe"),
             new PlantType(00, 06, 05, 08, 1, 1, 08, 11, "carrot"),
-            new PlantType(00, 09, 06, 07, 1, 1, 02, 15, "beet"),
+            new PlantType(00, 09, 06, 07, 1, 1, 02, 30, "beet"),
             new PlantType(00, 12, 09, 09, 2, 4, 26, 08, "garlic"),
             new PlantType(00, 17, 06, 09, 2, 4, 40, 06, "pepper"),
             new PlantType(00, 23, 08, 10, 1, 1, 90, 03, "watermelon"),
