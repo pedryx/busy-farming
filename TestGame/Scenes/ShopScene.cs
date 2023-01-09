@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
+using System.Collections.Generic;
+using System.Linq;
+
 using TestGame.Components;
 using TestGame.Resources;
 using TestGame.UI;
@@ -9,6 +12,9 @@ namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
+        private const int waterCanUpgradePrice = 100;
+        private const int inventoryUpgradePrice = 100;
+
         private const int rowSize = 7;
         private const int columnSize = 4;
         private const float shopScale = 1.0f;
@@ -33,6 +39,59 @@ namespace TestGame.Scenes
         {
             CreateLeaveButton();
             CreateShoppingWindow();
+            CreateUpgradeButtons();
+        }
+
+        private void CreateUpgradeButtons()
+        {
+            var buttons = new List<Button>();
+            var apperance = new Apperance()
+            {
+                Sprite = new Sprite()
+                {
+                    Texture = Game.SpriteManager["scrollsandblocks"],
+                    SourceRectange = new Rectangle(0, 64, 96, 32),
+                },
+                Scale = new Vector2(2.5f),
+            };
+            var font = Game.FontManager[new FontDescriptor()
+            {
+                Name = "calibri",
+                FontHeight = 32,
+            }];
+            float yPosition = windowSize.Y * 0.7f;
+
+            buttons.Add(new Button()
+            {
+                Apperance = apperance,
+                Font = font,
+                Text = $"Water Can - {waterCanUpgradePrice}",
+            });
+            buttons.Last().Clicked += (sender, e) =>
+            {
+                System.Console.WriteLine("water can upgrade");
+            };
+
+            buttons.Add(new Button()
+            {
+                Apperance = apperance.Clone(),
+                Font = font,
+                Text = $"Inventory - {inventoryUpgradePrice}",
+            });
+            buttons.Last().Clicked += (sender, e) =>
+            {
+                System.Console.WriteLine("inventory upgrade");
+            };
+
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].Apperance.Position = new Vector2()
+                {
+                    X = (windowSize.X / (buttons.Count + 1)) * (i + 1) - buttons[i].Apperance.Size.X / 2,
+                    Y = yPosition,
+                };
+                UILayer.AddElement(buttons[i]);
+            }
         }
 
         private void CreateShoppingWindow()
