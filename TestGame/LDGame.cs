@@ -22,6 +22,11 @@ namespace TestGame
         public FontManager FontManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
         public Camera Camera { get; private set; } = new();
+        public Vector2 WindowSize => new()
+        {
+            X = Graphics.PreferredBackBufferWidth,
+            Y = Graphics.PreferredBackBufferHeight,
+        };
 
         public LDGame()
         {
