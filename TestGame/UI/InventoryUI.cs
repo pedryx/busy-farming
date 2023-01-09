@@ -29,7 +29,8 @@ namespace TestGame.UI
         public SpriteFont Font;
         public Sprite ClickedSprite;
 
-        public event InventoryClickEventHandler Clicked;
+        public event InventoryClickEventHandler LeftClicked;
+        public event InventoryClickEventHandler RightClicked;
 
         public InventoryUI(Inventory inventory)
         {
@@ -45,7 +46,8 @@ namespace TestGame.UI
                 {
                     if (inventory.Slots[i] != null && inventory.Slots[i].Quantity != 0)
                     {
-                        Clicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
+                        LeftClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
+                        RightClicked?.Invoke(this, new InventoryClickEventArgs(inventory, i));
                         break;
                     }
                 }

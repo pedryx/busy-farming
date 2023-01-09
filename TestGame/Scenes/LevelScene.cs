@@ -201,7 +201,7 @@ namespace TestGame.Scenes
                 Y = windowSize.Y * 0.99f - inventoryUI.Apperance.Size.Y,
             };
 
-            inventoryUI.Clicked += (sender, e) =>
+            inventoryUI.LeftClicked += (sender, e) =>
             {
                 if (Game.CurrentScene is LevelScene)
                 {
