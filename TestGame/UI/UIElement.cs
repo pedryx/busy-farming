@@ -9,6 +9,9 @@ namespace TestGame.UI
     {
         public Apperance Apperance;
 
+        public bool Enabled = true;
+        public bool Visible = true;
+
         public virtual void Update() { }
         public virtual void Draw(SpriteBatch spriteBatch)
             => Apperance.Draw(spriteBatch);

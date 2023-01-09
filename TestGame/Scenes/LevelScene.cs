@@ -15,7 +15,7 @@ namespace TestGame.Scenes
     internal class LevelScene : Scene
     {
         private const int InitialInventorySize = 3;
-        private const int InitialFarmColumns = 10;
+        private const int InitialFarmColumns = 9;
 
         private Vector2 windowSize;
         private InventoryUI inventoryUI;
@@ -117,7 +117,7 @@ namespace TestGame.Scenes
 
         private void CreateFarm()
         {
-            for (int i = 0; i < InitialFarmColumns; i++)
+            for (int i = 0; i < InitialFarmColumns + 2; i++)
                 PlantUtils.CreateFarmColumn(World);
         }
 
@@ -204,6 +204,7 @@ namespace TestGame.Scenes
                 }
             };
 
+            Inventory.ui = inventoryUI;
             UILayer.AddElement(inventoryUI);
         }
 
