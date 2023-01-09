@@ -1,4 +1,6 @@
-﻿using TestGame.Components;
+﻿using Microsoft.Xna.Framework;
+
+using TestGame.Components;
 
 
 namespace TestGame.UI
@@ -12,7 +14,7 @@ namespace TestGame.UI
             this.inventory = inventory;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             Text = $"Coins: {inventory.Coins}\nWater: {inventory.CurrentWater}/{inventory.MaxWater}";
         }

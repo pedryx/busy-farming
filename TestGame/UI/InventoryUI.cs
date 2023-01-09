@@ -36,7 +36,7 @@ namespace TestGame.UI
             this.inventory = inventory;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             var apperance = Apperance.Clone();
             for (int i = 0; i < inventory.Slots.Count; i++)
@@ -56,7 +56,7 @@ namespace TestGame.UI
                 inventory.Selected = -1;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             var apperance = Apperance.Clone();
             var clickedSprite = ClickedSprite.Clone();

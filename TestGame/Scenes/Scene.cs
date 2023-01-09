@@ -34,13 +34,13 @@ namespace TestGame.Scenes
 
         public void Update(GameTime gameTime)
         {
-            UILayer.Update();
+            UILayer.Update(gameTime);
             World.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime)
         {
-            UILayer.Draw(Game.SpriteBatch);
+            UILayer.Draw(Game.SpriteBatch, gameTime);
             World.Draw(gameTime);
         }
     }

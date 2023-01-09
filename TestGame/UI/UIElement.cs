@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using TestGame.Components;
 
@@ -12,8 +13,8 @@ namespace TestGame.UI
         public bool Enabled = true;
         public bool Visible = true;
 
-        public virtual void Update() { }
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Update(GameTime gameTime) { }
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime)
             => Apperance.Draw(spriteBatch);
     }
 }

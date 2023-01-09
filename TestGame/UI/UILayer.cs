@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 using System.Collections.Generic;
 
@@ -14,22 +15,22 @@ namespace TestGame.UI
             controls.Add(control);
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             foreach (var control in controls)
             {
                 if (control.Enabled)
-                    control.Update();
+                    control.Update(gameTime);
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
             foreach (var control in controls)
             {
                 if (control.Visible)
-                    control.Draw(spriteBatch);
+                    control.Draw(spriteBatch, gameTime);
             }
             spriteBatch.End();
         }

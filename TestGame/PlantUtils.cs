@@ -40,7 +40,7 @@ namespace TestGame
             float width = size * rowSize;
 
             farmPosition.X = graphics.PreferredBackBufferWidth / 2 - width / 2;
-            farmPosition.Y = graphics.PreferredBackBufferHeight * 0.05f;
+            farmPosition.Y = graphics.PreferredBackBufferHeight * 0.09f;
         }
 
         public static void CreateFarmColumn(World world)

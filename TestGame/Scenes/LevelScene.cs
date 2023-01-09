@@ -1,6 +1,4 @@
-﻿//#define SCREENSHOT
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 using MonoGame.Extended.Entities;
 
@@ -14,8 +12,9 @@ namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
-        private const int InitialInventorySize = 3;
-        private const int InitialFarmColumns = 9;
+        private const float time = 2 * 60;
+        private const int initialInventorySize = 3;
+        private const int initialFarmColumns = 9;
 
         private Vector2 windowSize;
         private InventoryUI inventoryUI;
@@ -70,7 +69,7 @@ namespace TestGame.Scenes
         private void CreateInventory()
         {
             Inventory = new Inventory();
-            for (int i = 0; i < InitialInventorySize; i++)
+            for (int i = 0; i < initialInventorySize; i++)
                 Inventory.Slots.Add(null);
             Inventory.MaxWater = 1;
             Inventory.CurrentWater = 1;
@@ -86,23 +85,7 @@ namespace TestGame.Scenes
                     Texture = Game.SpriteManager["water_can"],
                 },
             };
-#if SCREENSHOT
-            for (int i = 1; i < PlantType.Types.Count; i++)
-            {
-                Inventory.Slots[i] = new SeedItem(PlantType.Types[i].PlantID)
-                {
-                    Quantity = 10,
-                    Type = PlantType.Types[i],
-                    Sprite = PlantUtils.CreatePlantSprite(
-                        PlantType.Types[i],
-                        PlantUtils.PlantStages - 1
-                    ),
-                    Price = PlantType.Types[i].Price / 2,
-                };
-                Inventory.Slots[i].Quantity = 10;
-            }
-            PlantSystem.PlantDecay = false;
-#else
+
             var carrotType = PlantType.GetType("carrot");
             Inventory.Slots[1] = new SeedItem(carrotType.PlantID)
             {
@@ -112,12 +95,11 @@ namespace TestGame.Scenes
                 Price = carrotType.Price / 2,
             };
             Inventory.Slots[1].Quantity = 4;
-#endif
         }
 
         private void CreateFarm()
         {
-            for (int i = 0; i < InitialFarmColumns + 2; i++)
+            for (int i = 0; i < initialFarmColumns + 2; i++)
                 PlantUtils.CreateFarmColumn(World);
         }
 
@@ -127,6 +109,33 @@ namespace TestGame.Scenes
             CreateMiscCounter();
             CreateShopButton();
             CreateLake();
+            CreateTimer();
+        }
+
+        private void CreateTimer()
+        {
+            var timer = new Timer(time)
+            {
+                Apperance = new Apperance(),
+                Font = Game.FontManager[new FontDescriptor()
+                {
+                    Name = "calibri",
+                    FontHeight = 48,
+                }],
+            };
+
+            timer.Apperance.Position = new Vector2()
+            {
+                X = windowSize.X / 2 - timer.Size.X / 2,
+                Y = windowSize.Y * 0.015f,
+            };
+
+            timer.TimeUp += (sender, e) =>
+            {
+
+            };
+
+            UILayer.AddElement(timer);
         }
 
         private void CreateLake()
@@ -161,7 +170,6 @@ namespace TestGame.Scenes
 
         private void CreateInventoryUI()
         {
-            // create UI
             inventoryUI = new(Inventory)
             {
                 Apperance = new Apperance()
@@ -188,7 +196,7 @@ namespace TestGame.Scenes
 
             inventoryUI.Apperance.Position = new Vector2()
             {
-                X = windowSize.X / 2 - (inventoryUI.Apperance.Size.X * InitialInventorySize) / 2,
+                X = windowSize.X / 2 - (inventoryUI.Apperance.Size.X * initialInventorySize) / 2,
                 Y = windowSize.Y * 0.99f - inventoryUI.Apperance.Size.Y,
             };
 

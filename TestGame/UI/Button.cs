@@ -13,15 +13,15 @@ namespace TestGame.UI
         public SpriteFont Font;
         public string Text = "";
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             if (Input.LeftClickOn(Apperance))
                 Clicked?.Invoke(this, EventArgs.Empty);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            base.Draw(spriteBatch);
+            base.Draw(spriteBatch, gameTime);
 
             if (Font == null)
                 return;

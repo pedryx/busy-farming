@@ -12,7 +12,7 @@ namespace TestGame.UI
 
         public Vector2 Size => Font.MeasureString(Text);
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
             => spriteBatch.DrawString(Font, Text, Apperance.Position, Color);
     }
 }
