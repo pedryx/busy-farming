@@ -12,7 +12,7 @@ namespace TestGame.Scenes
 {
     internal class LevelScene : Scene
     {
-        private const float time = 1 * 60;
+        private const float time = 2 * 60;
         private const int initialInventorySize = 3;
         private const int initialFarmColumns = 9;
 
