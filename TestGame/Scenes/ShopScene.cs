@@ -12,20 +12,22 @@ namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
+        private const int upgradesPrice = 10;
+
         private const float wateringUpgradeStep = 0.1f;
-        private const int wateringUpgradePrice = 50;
+        private const int wateringUpgradePrice = upgradesPrice;
 
         private const float plantOvergrownUpgradeStep = 0.1f;
-        private const int plantOvergrownUpragePrice = 50;
+        private const int plantOvergrownUpragePrice = upgradesPrice;
 
         private const float rainChanceUpgradeStep = 0.1f;
         private const float maxRainChangeUpgrade = 0.7f;
-        private const int rainChanceUpgradePrice = 50;
+        private const int rainChanceUpgradePrice = upgradesPrice;
 
-        private const int waterCanUpgradePrice = 50;
+        private const int waterCanUpgradePrice = upgradesPrice;
 
         private const int maxInventorySlots = 10;
-        private const int inventoryUpgradePrice = 50;
+        private const int inventoryUpgradePrice = upgradesPrice;
 
         private const int rowSize = 7;
         private const int columnSize = 4;
