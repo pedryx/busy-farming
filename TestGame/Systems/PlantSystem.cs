@@ -69,6 +69,7 @@ namespace TestGame.Systems
                 // harvest plant
                 if (plant.CurrentGrow >= plant.GrowDuration)
                 {
+                    GlobalStatistics.PlantsHarvested++;
                     DestroyPlant(plant);
 
                     int slot = inventory.GetItemSlotOrFreeSlot<ProductItem>(plant.Type.PlantID);

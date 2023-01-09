@@ -72,6 +72,8 @@ namespace TestGame.Systems
                     if (inventory.SelectedItem is SeedItem)
                     {
                         // plant a seed
+                        GlobalStatistics.PlantsPlanted++;
+
                         var plantType = (inventory.Slots[inventory.Selected] as SeedItem).Type;
                         var plantApperance = ghostApperance.Clone();
                         plantApperance.Sprite = PlantUtils.CreatePlantSprite(plantType, 0);

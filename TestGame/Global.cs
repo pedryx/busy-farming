@@ -6,4 +6,10 @@
         public static float RainChance = 0.3f;
         public static float PlantOvergrownModifier = 1.0f;
     }
+
+    public static class GlobalStatistics
+    {
+        public static int PlantsPlanted;
+        public static int PlantsHarvested;
+    }
 }
