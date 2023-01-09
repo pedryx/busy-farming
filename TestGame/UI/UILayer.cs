@@ -29,8 +29,7 @@ namespace TestGame.UI
             spriteBatch.Begin();
             foreach (var control in controls)
             {
-                if (control.Visible)
-                    control.Draw(spriteBatch, gameTime);
+                control.Draw(spriteBatch, gameTime);
             }
             spriteBatch.End();
         }

@@ -99,7 +99,7 @@ namespace TestGame.Scenes
 
         private void CreateFarm()
         {
-            for (int i = 0; i < initialFarmColumns + 2; i++)
+            for (int i = 0; i < initialFarmColumns; i++)
                 PlantUtils.CreateFarmColumn(World);
         }
 
