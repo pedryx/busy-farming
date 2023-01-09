@@ -12,7 +12,7 @@ namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
-        private const int upgradesPrice = 10;
+        private const int upgradesPrice = 30;
 
         private const float wateringUpgradeStep = 0.1f;
         private const int wateringUpgradePrice = upgradesPrice;
@@ -324,6 +324,9 @@ namespace TestGame.Scenes
 
         public void SellItem(Item item, int quantity)
         {
+            if (item is WaterCan)
+                return;
+
             inventory.Coins += item.Price * quantity;
             item.Quantity -= quantity;
         }
