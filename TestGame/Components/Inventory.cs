@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using TestGame.UI;
 
 namespace TestGame.Components
 {
@@ -10,6 +11,7 @@ namespace TestGame.Components
         public int Coins;
         public float CurrentWater;
         public float MaxWater;
+        public InventoryUI ui;
 
         public Item SelectedItem => Selected == -1 ? null : Slots[Selected];
 

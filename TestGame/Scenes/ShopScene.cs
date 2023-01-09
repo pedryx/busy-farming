@@ -12,7 +12,19 @@ namespace TestGame.Scenes
 {
     internal class ShopScene : Scene
     {
+        private const float wateringUpgradeStep = 0.1f;
+        private const int wateringUpgradePrice = 100;
+
+        private const float plantOvergrownUpgradeStep = 0.1f;
+        private const int plantOvergrownUpragePrice = 100;
+
+        private const float rainChanceUpgradeStep = 0.1f;
+        private const float maxRainChangeUpgrade = 0.7f;
+        private const int rainChanceUpgradePrice = 100;
+
         private const int waterCanUpgradePrice = 100;
+
+        private const int maxInventorySlots = 10;
         private const int inventoryUpgradePrice = 100;
 
         private const int rowSize = 7;
@@ -52,15 +64,16 @@ namespace TestGame.Scenes
                     Texture = Game.SpriteManager["scrollsandblocks"],
                     SourceRectange = new Rectangle(0, 64, 96, 32),
                 },
-                Scale = new Vector2(2.5f),
+                Scale = new Vector2(2.0f),
             };
             var font = Game.FontManager[new FontDescriptor()
             {
                 Name = "calibri",
-                FontHeight = 32,
+                FontHeight = 24,
             }];
             float yPosition = windowSize.Y * 0.7f;
 
+            // water can upgrade
             buttons.Add(new Button()
             {
                 Apperance = apperance,
@@ -69,9 +82,14 @@ namespace TestGame.Scenes
             });
             buttons.Last().Clicked += (sender, e) =>
             {
-                System.Console.WriteLine("water can upgrade");
+                if (inventory.Coins < waterCanUpgradePrice)
+                    return;
+
+                inventory.Coins -= waterCanUpgradePrice;
+                inventory.MaxWater++;
             };
 
+            // inventory uprade
             buttons.Add(new Button()
             {
                 Apperance = apperance.Clone(),
@@ -80,14 +98,80 @@ namespace TestGame.Scenes
             });
             buttons.Last().Clicked += (sender, e) =>
             {
-                System.Console.WriteLine("inventory upgrade");
+                if (inventory.Coins < inventoryUpgradePrice)
+                    return;
+
+                inventory.Coins -= inventoryUpgradePrice;
+                inventory.Slots.Add(null);
+                inventory.ui.Apperance.Position.X -= inventory.ui.Apperance.Size.X / 2;
+
+                if (inventory.Slots.Count >= maxInventorySlots)
+                {
+                    (sender as Button).Enabled = false;
+                    (sender as Button).Apperance.Sprite.Color = Color.Gray;
+                }
+            };
+
+            // rain chance upgrade
+            buttons.Add(new Button()
+            {
+                Apperance = apperance.Clone(),
+                Font = font,
+                Text = $"Rain Chance - {rainChanceUpgradePrice}",
+            });
+            buttons.Last().Clicked += (sender, e) =>
+            {
+                if (inventory.Coins < rainChanceUpgradePrice)
+                    return;
+
+                inventory.Coins -= rainChanceUpgradePrice;
+                GlobalModifiers.RainChance += rainChanceUpgradeStep;
+
+                if (GlobalModifiers.RainChance >= maxRainChangeUpgrade)
+                {
+                    (sender as Button).Enabled = false;
+                    (sender as Button).Apperance.Sprite.Color = Color.Gray;
+                }
+            };
+
+            // plant overgrown upgrade
+            buttons.Add(new Button()
+            {
+                Apperance = apperance.Clone(),
+                Font = font,
+                Text = $"Overgrown - {plantOvergrownUpragePrice}",
+            });
+            buttons.Last().Clicked += (sender, e) =>
+            {
+                if (inventory.Coins < plantOvergrownUpragePrice)
+                    return;
+
+                inventory.Coins -= plantOvergrownUpragePrice;
+                GlobalModifiers.PlantOvergrownModifier += plantOvergrownUpgradeStep;
+            };
+
+            // watering upgrade
+            buttons.Add(new Button()
+            {
+                Apperance = apperance.Clone(),
+                Font = font,
+                Text = $"Watering - {wateringUpgradePrice}",
+            });
+            buttons.Last().Clicked += (sender, e) =>
+            {
+                if (inventory.Coins < wateringUpgradePrice)
+                    return;
+
+                inventory.Coins -= wateringUpgradePrice;
+                GlobalModifiers.WaterDecreaseSpeed += wateringUpgradeStep;
             };
 
             for (int i = 0; i < buttons.Count; i++)
             {
                 buttons[i].Apperance.Position = new Vector2()
                 {
-                    X = (windowSize.X / (buttons.Count + 1)) * (i + 1) - buttons[i].Apperance.Size.X / 2,
+                    X = (windowSize.X / (buttons.Count + 1)) * (i + 1) 
+                        - buttons[i].Apperance.Size.X / 2,
                     Y = yPosition,
                 };
                 UILayer.AddElement(buttons[i]);

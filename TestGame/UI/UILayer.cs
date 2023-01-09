@@ -18,7 +18,8 @@ namespace TestGame.UI
         {
             foreach (var control in controls)
             {
-                control.Update();
+                if (control.Enabled)
+                    control.Update();
             }
         }
 
@@ -27,7 +28,8 @@ namespace TestGame.UI
             spriteBatch.Begin();
             foreach (var control in controls)
             {
-                control.Draw(spriteBatch);
+                if (control.Visible)
+                    control.Draw(spriteBatch);
             }
             spriteBatch.End();
         }

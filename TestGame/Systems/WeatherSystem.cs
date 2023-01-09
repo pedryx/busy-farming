@@ -69,7 +69,10 @@ namespace TestGame.Systems
                 ellapsed -= nextWeatherEvent;
 
                 var events = Enum.GetValues<WeatherEvent>();
-                activeEvent = events[random.Next(1, events.Length)];
+                if (random.NextSingle() <= GlobalModifiers.RainChance)
+                    activeEvent = WeatherEvent.Rain;
+                else
+                    activeEvent = events[random.Next(2, events.Length)];
                 InvokeEvent();
             }
             else if (activeEvent != WeatherEvent.None && ellapsed >= weatherEventDuration)

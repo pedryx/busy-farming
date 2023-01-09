@@ -46,7 +46,8 @@ namespace TestGame.Systems
             }
 
             // decay
-            if (plant.CurrentGrow >= plant.GrowDuration + plant.Type.MaxOvergrow)
+            if (plant.CurrentGrow >= plant.GrowDuration 
+                + (plant.Type.MaxOvergrow * GlobalModifiers.PlantOvergrownModifier))
             {
                 if (PlantDecay)
                 {
