@@ -58,3 +58,5 @@ also need to deal with challenges like weed and unpredictable weather.
 ## Links:
 * Itch.io - https://pedryx.itch.io/busy-farming
 * ldjam - https://ldjam.com/events/ludum-dare/52/busy-farming
+
+![screenshot](https://github.com/pedryx/busy-farming/blob/master/screenshot.png?raw=true)
